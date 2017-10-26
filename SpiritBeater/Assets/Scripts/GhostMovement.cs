@@ -2,48 +2,84 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostMovement : MonoBehaviour {
+public class GhostMovement : MonoBehaviour 
+{
 
-	public Transform destinationOne;
-	public Transform destinationTwo;
-	public Transform destinationThree;
 	public Transform player;
 
+	public float targetTime = 1f;
+	public float currentTime = 0f;
+	public bool moveTarget = false;
+	public bool timerActive = false;
 	public Vector3 idleDest;
+    int previousPosition;
+
+
+    int maxTime;
+    int minTime;
 
 	bool idle = true;
 
+    public List<GameObject> terminals = new List<GameObject>();
+
 	// Use this for initialization
-	void Start () {
-		idleDest = destinationOne.position;
-	
+	void Start () 
+	{
+        previousPosition = 3;
+		idleDest = terminals[3].transform.position;
+        
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		Move ();
+	void Update () 
+	{
+		if (timerActive) 
+		{
+			currentTime += Time.deltaTime;
+			if (currentTime >= targetTime) 
+			{
+				moveTarget = true;
+				timerActive = false;
+				currentTime = 0f;
+			}
+		}
 
+        if (moveTarget)
+        {
+            SetTarget();
+            moveTarget = false;
+        }
+		Move ();
 }
 
 	void Move()
 	{
-		if (idle == true) {
+		if (idle == true) 
+		{
 			GetComponent<NavMeshAgent2D> ().destination = idleDest;
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (idleDest == destinationOne.position) {
-			idleDest = destinationTwo.position;
-		}
-		else if (idleDest == destinationTwo.position) {
-			idleDest = destinationThree.position;
-		}
-		else if (idleDest == destinationThree.position) {
-			idleDest = destinationOne.position;
-		}
+        if(other.gameObject == terminals[previousPosition])
+		timerActive = true;
 	}
+
+	void SetTarget()
+    {
+        int i = Random.Range(0, terminals.Count);
+
+        while (previousPosition == i)
+        {
+            i = Random.Range(0, terminals.Count);          
+                    
+        }
+
+        idleDest = terminals[i].transform.position;
+        previousPosition = i;
+       // print(i);  
+    }
 }
 
 
