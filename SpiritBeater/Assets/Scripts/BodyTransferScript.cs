@@ -39,15 +39,17 @@ public class BodyTransferScript : MonoBehaviour {
             if(Input.GetMouseButton(0))
             {
                
-                RaycastHit hitInfo = new RaycastHit();
-                bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-                if (hit)
+                RaycastHit2D hitInfo = new RaycastHit2D();
+                Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null)
                 {
                     //Debug.Log("Hit " + hitInfo.transform.gameObject.name);
-                    if (hitInfo.transform.gameObject.tag == "Spirit")
+                    if (hit.collider.transform.gameObject.tag == "Spirit")
                     {
                         Debug.Log("It's working!");
-                        GameObject target = hitInfo.transform.gameObject;
+                        GameObject target = hit.collider.transform.gameObject;
                         Possess(target);
                     }
                    
