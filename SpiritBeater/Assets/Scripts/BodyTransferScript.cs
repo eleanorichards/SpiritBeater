@@ -39,7 +39,7 @@ public class BodyTransferScript : MonoBehaviour {
             if(Input.GetMouseButton(0))
             {
                
-                RaycastHit2D hitInfo = new RaycastHit2D();
+                //RaycastHit2D hitInfo = new RaycastHit2D();
                 Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -92,12 +92,16 @@ public class BodyTransferScript : MonoBehaviour {
     //This function will trigger in the update function once a timer variable hits a certain point
     void Recall()
     {
+        //Set possessedObject to null
+        //unparent camera from possessed object if necessary
         possessedObject = null;
         mainCamera.transform.parent = null;
         isRecalling = false;
         recallTimer = 60.0f;
-        //Set possessedObject to null
-        //unparent camera from possessed object if necessary
+        player.GetComponent<PlayerValuesScript>().playerHealth = -1;
+        // set player's health to -1 
+        
+       
 
 
     }
@@ -105,10 +109,12 @@ public class BodyTransferScript : MonoBehaviour {
     void Possess(GameObject clickedObject)
     {
         possessedObject = clickedObject;
-        // mainCamera.transform.position.x = clickedObject.transform.position.x;
-        // mainCamera.transform.position.z = clickedObject.transform.position.z;
         mainCamera.transform.position = new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, -10);
         mainCamera.transform.parent = clickedObject.transform;
+        //Set player health to health of the possessed object
+
+
+
         //Set clickedObject's possessed variable to true
         //Move camera to same position on X/Y axis as the clicked object 
         //Make camera a child of the possessed Object
