@@ -94,6 +94,8 @@ public class BodyTransferScript : MonoBehaviour {
     {
         possessedObject = null;
         mainCamera.transform.parent = null;
+        isRecalling = false;
+        recallTimer = 60.0f;
         //Set possessedObject to null
         //unparent camera from possessed object if necessary
 
