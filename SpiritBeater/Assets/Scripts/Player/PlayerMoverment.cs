@@ -40,11 +40,11 @@ public class PlayerMoverment : MonoBehaviour {
 		//set direction
 		if (GetComponent<Rigidbody2D> ().velocity.x < 0) {
 			directionIsLeft = true;
-			GetComponent<SpriteRenderer> ().flipX = true;
+			transform.localScale = new Vector3(-1,1,1);
 		}
 		if (GetComponent<Rigidbody2D> ().velocity.x > 0) {
 			directionIsLeft = false;
-			GetComponent<SpriteRenderer> ().flipX = false;
+			transform.localScale = new Vector3(1,1,1);
 		}
 	}
 
