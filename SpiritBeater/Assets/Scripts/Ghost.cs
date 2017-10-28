@@ -5,8 +5,10 @@ using UnityEngine;
 public class Ghost : MonoBehaviour
 {
     public Transform player;
-    
-    public float targetTime = 1f;
+
+    private float OGtargetTime;
+    public float terminalTime = 2f;
+    public float homeTime = 5f;
     public float currentTime = 0f;
     public bool moveTarget = false;
     public bool timerActive = false;
@@ -16,6 +18,7 @@ public class Ghost : MonoBehaviour
     int maxTime;
     int minTime;
 
+    //if idle work, if not go to player
     bool idle = true;
     bool isHome = true;
 
@@ -26,19 +29,26 @@ public class Ghost : MonoBehaviour
         int i = Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
+        OGtargetTime = terminalTime;
     }
 
     void Update()
     {
         if (timerActive)
         {
+            //if returning to home terminal (terminal[0]) then stay for longer
+            if (idleDest == terminals[0].transform.position)
+            {
+                terminalTime = homeTime;
+            }
             currentTime += Time.deltaTime;
-            if (currentTime >= targetTime)
+            if (currentTime >= terminalTime)
             {
                 moveTarget = true;
                 timerActive = false;
                 currentTime = 0f;
             }
+            terminalTime = OGtargetTime;
         }
 
         if (moveTarget)
@@ -55,6 +65,11 @@ public class Ghost : MonoBehaviour
         {
             GetComponent<NavMeshAgent2D>().destination = idleDest;
         }
+        else if(idle == false)
+        {
+            GetComponent<NavMeshAgent2D>().destination = player.transform.position;
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
