@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Punch : MonoBehaviour {
 
+    private EnemiesInRange range;
+    private List<Collider2D> list;
     private float time = 0.0f;
     private float timeBetweenPunches = 1.0f;
 
     private GameObject enemy;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+        range = GetComponent<EnemiesInRange>();
+        list = range.triggerList;
         time = Time.time;
 	}
 	
@@ -21,17 +25,12 @@ public class Punch : MonoBehaviour {
             if (time >= timeBetweenPunches)
             {
                 time = 0.0f;
-                //Deal damage needs to be called
+                foreach(Collider2D item in list)
+                {
+                    //Take Damage
+                }
             }
 
         }
 	}
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        enemy = col.gameObject;
-    }
-    void OnTriggerExit2D(Collider2D col)
-    {
-        enemy = null;
-    }
 }
