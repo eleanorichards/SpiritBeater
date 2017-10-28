@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class BodyTransferScript : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
 
-        //bool for if player is currently recalling
-        //gameobject for the player - will need access to variables e.g. possessedobject
-        //camera object for the main camera - will need access to camera transforms and parenting
-        //variable for recalling timer
+    //bool for if player is currently recalling
+    public bool isRecalling = false;
+    //gameobject for the player - will need access to variables e.g. possessedobject
+    public GameObject player;
+    public GameObject possessedObject = null;
+    //camera object for the main camera - will need access to camera transforms and parenting
+    public Camera mainCamera;
+    //variable for recalling timer
+    public float recallTimer;
 
 
 	void Start () {
+
+        mainCamera = Camera.main;
+
+        player = this.gameObject;
+        recallTimer = 180.0f;
+
+
+        
 		
 	}
 	
@@ -20,61 +33,93 @@ public class BodyTransferScript : MonoBehaviour {
 	void Update () {
 
         //if the player has not possessed an object
-        //{
-        //if mouse clicked
-        //{
-        //if mouse is clicking on an object with the tag 'spirit'
-        //{
-        //call the possess function passing in the clicked object
-        //}
-        //}
-        //}
- 
-        //else 
-        //{
-        //if b button is pressed
-        //{
-        //if player is not recalling
-        //{
-        //set recalling variable to true
-        //}
-        //}
-        //}
+        if(possessedObject == null)
+        {
+
+            if(Input.GetMouseButton(0))
+            {
+               
+                //RaycastHit2D hitInfo = new RaycastHit2D();
+                Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null)
+                {
+                    //Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+                    if (hit.collider.transform.gameObject.tag == "Spirit")
+                    {
+                        Debug.Log("It's working!");
+                        GameObject target = hit.collider.transform.gameObject;
+                        Possess(target);
+                    }
+                   
+                }
+                else
+                {
+                    Debug.Log("No hit");
+                }
+                
+            }
+
+        }
+        else
+        {
+            if(Input.GetKey(KeyCode.B))
+            {
+                if(!isRecalling)
+                {
+                    isRecalling = true;
+                }
+            }
+            
+        }
 
 
-        //if recalling is true
-        //{
-        //if recall timer is more than 0
-        //{
-        //recall timer down 1 frame
-        //}
-        //else
-        //{
-        //Reset recall timer
-        //Call recall function
-        //}
-        //}
+        if(isRecalling)
+        {
+            if(recallTimer > 0)
+            {
+                recallTimer--;
+            }
+            else
+            {
+                Recall();
+            }
+        }
 
-		
-	}
+    }
 
     //This function will trigger in the update function once a timer variable hits a certain point
     void Recall()
     {
-
         //Set possessedObject to null
         //unparent camera from possessed object if necessary
+        possessedObject = null;
+        mainCamera.transform.parent = null;
+        isRecalling = false;
+        recallTimer = 60.0f;
+        player.GetComponent<PlayerValuesScript>().playerHealth = -1;
+        // set player's health to -1 
+        
+       
 
 
     }
     //This function will trigger when the player clicks on an object
     void Possess(GameObject clickedObject)
     {
+        possessedObject = clickedObject;
+        mainCamera.transform.position = new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, -10);
+        mainCamera.transform.parent = clickedObject.transform;
+        //Set player health to health of the possessed object
 
-        //Set possessedObject to the clicked object
+
+
         //Set clickedObject's possessed variable to true
-        //Move camera to same position on X/Z axis as the clicked object 
+        //Move camera to same position on X/Y axis as the clicked object 
         //Make camera a child of the possessed Object
 
     }
+
+  
 }
