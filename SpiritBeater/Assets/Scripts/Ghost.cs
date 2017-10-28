@@ -92,11 +92,27 @@ public class Ghost : MonoBehaviour
     {
         int i = Random.Range(0, terminals.Count);
 
-        while (previousPosition == i)
+        if (previousPosition != 0)
+        {
+            i = 0;
+        }
+        else
         {
             i = Random.Range(0, terminals.Count);
         }
+        
         idleDest = terminals[i].transform.position;
         previousPosition = i;
     }
+    //void SetTarget()
+    //{
+    //    int i = Random.Range(0, terminals.Count);
+
+    //    while (previousPosition == i)
+    //    {
+    //        i = Random.Range(0, terminals.Count);
+    //    }
+    //    idleDest = terminals[i].transform.position;
+    //    previousPosition = i;
+    //}
 }
