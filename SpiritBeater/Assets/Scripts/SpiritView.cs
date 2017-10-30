@@ -13,13 +13,13 @@ public class SpiritView : MonoBehaviour
     public float view_angle;
 
     private LayerMask obstacleMask = 8;
+
     //[HideInInspector]
     public List<GameObject> spirits = new List<GameObject>(100);
    
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -30,6 +30,7 @@ public class SpiritView : MonoBehaviour
 
     private void FOVCast()
     {
+
         Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius);
         Debug.Log(spiritsInRadius.Length);
         //find angle between my agent and the hit is it in my field of view
