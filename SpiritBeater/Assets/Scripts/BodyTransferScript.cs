@@ -110,6 +110,8 @@ public class BodyTransferScript : MonoBehaviour {
         // 2) The player Spirit is destroyed 
         // 3) An AI Spirit is instantiated at the same position with the same health
 
+
+        //We will want to change this to spirit health soon rather than using playervaluescript
         possessedGhostHealth = playerSpirit.GetComponent<PlayerValuesScript>().playerHealth;
         possessedGhostPosition = playerSpirit.transform.position;
         mainCamera.transform.parent = null;
@@ -119,6 +121,7 @@ public class BodyTransferScript : MonoBehaviour {
         newGhost = Instantiate(Ghost) as GameObject;
         Ghost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
         Ghost.transform.position = possessedGhostPosition;
+
       
 
 
@@ -144,6 +147,7 @@ public class BodyTransferScript : MonoBehaviour {
         newPlayer = Instantiate(playerSpirit) as GameObject;
         playerSpirit.transform.position = possessedGhostPosition;
         playerSpirit.GetComponent<PlayerValuesScript>().playerHealth = possessedGhostHealth;
+        
         
         
         possessedObject = true;

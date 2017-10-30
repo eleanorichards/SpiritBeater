@@ -28,7 +28,21 @@ public class SpiritHealth : MonoBehaviour {
 	public void DecreaseHealth()
 	{
 		currentHealth -= 2f;
-		dollah.IncreaseCombo ();
+        if(this.gameObject.tag == "Player Spirit")
+        {
+            if(currentHealth == 0f)
+            {
+                //End Game Procedures
+                Debug.Log("Player Died");
+            }
+                
+            
+        }
+        else
+        {
+            dollah.IncreaseCombo();
+        }
+		
 		//scales numbers for healthbar
 		float calculateHealth = currentHealth / maxHealth;
 		SetHealthBar (calculateHealth);
