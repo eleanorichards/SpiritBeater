@@ -10,17 +10,18 @@ public class PlayerMoverment : MonoBehaviour
     private bool directionIsLeft;
     public bool possessed = false;
     private Rigidbody2D rig;
+    public Camera mainCamera;
     // Use this for initialization
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (possessed)
-        {
+        
             if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
             {
                 //dampen velocity
@@ -41,7 +42,7 @@ public class PlayerMoverment : MonoBehaviour
             rig.velocity = new Vector2(
             Mathf.Clamp(rig.velocity.x, -speed, speed),
             Mathf.Clamp(rig.velocity.y, -speed, speed));
-        }
+        mainCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -10);
         //set direction
         //	if (GetComponent<Rigidbody2D> ().velocity.x < 0) {
         //		directionIsLeft = true;

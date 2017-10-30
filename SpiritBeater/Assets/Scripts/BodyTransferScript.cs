@@ -9,19 +9,27 @@ public class BodyTransferScript : MonoBehaviour {
     //bool for if player is currently recalling
     public bool isRecalling = false;
     //gameobject for the player - will need access to variables e.g. possessedobject
-    public GameObject player;
-    public GameObject possessedObject = null;
+    public GameObject playerSpirit;
+    public GameObject Ghost;
+    public bool possessedObject = false;
     //camera object for the main camera - will need access to camera transforms and parenting
     public Camera mainCamera;
     //variable for recalling timer
     public float recallTimer;
+    public float possessedGhostHealth;
+    public Vector2 possessedGhostPosition;
+    GameObject newPlayer;
+    GameObject newGhost;
 
 
-	void Start () {
 
-        mainCamera = Camera.main;
 
-        player = this.gameObject;
+
+    void Start () {
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+
+       // player = this.gameObject;
         recallTimer = 180.0f;
 
 
@@ -33,7 +41,7 @@ public class BodyTransferScript : MonoBehaviour {
 	void Update () {
 
         //if the player has not possessed an object
-        if(possessedObject == null)
+        if(!possessedObject)
         {
 
             if(Input.GetMouseButton(0))
@@ -64,7 +72,8 @@ public class BodyTransferScript : MonoBehaviour {
         }
         else
         {
-            if(Input.GetKey(KeyCode.B))
+            
+            if (Input.GetKey(KeyCode.B))
             {
                 if(!isRecalling)
                 {
@@ -83,30 +92,39 @@ public class BodyTransferScript : MonoBehaviour {
             }
             else
             {
-                Recall();
+                Recall(newPlayer);
             }
         }
 
     }
 
     //This function will trigger in the update function once a timer variable hits a certain point
-    void Recall()
+    void Recall(GameObject objectToLeave)
     {
-        //Set possessedObject to null
-        //unparent camera from possessed object if necessary
+       
+        //When Player Recalls from a spirit:
+        //time passes for recall to charge (can be interrupted if we program it)
+        // When recall happens:
+        // 1) The health and positions of the player spirit are stored temporarily
+        // 1.5) The camera's parenting with the player spirit is nullified
+        // 2) The player Spirit is destroyed 
+        // 3) An AI Spirit is instantiated at the same position with the same health
 
-        possessedObject.GetComponent<PlayerMoverment>().IsPossessed(false);
-        possessedObject.GetComponent<NavMeshAgent2D>().enabled = true;
-        possessedObject.GetComponent<Ghost>().enabled = true;
-        possessedObject = null;
+        possessedGhostHealth = playerSpirit.GetComponent<PlayerValuesScript>().playerHealth;
+        possessedGhostPosition = playerSpirit.transform.position;
         mainCamera.transform.parent = null;
         isRecalling = false;
         recallTimer = 60.0f;
-        player.GetComponent<PlayerValuesScript>().playerHealth = -1;
+        Destroy(objectToLeave.gameObject);
+        newGhost = Instantiate(Ghost) as GameObject;
+        Ghost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
+        Ghost.transform.position = possessedGhostPosition;
+      
 
-        
-        
-       
+
+        possessedObject = false;
+
+
 
 
     }
@@ -114,23 +132,26 @@ public class BodyTransferScript : MonoBehaviour {
     void Possess(GameObject clickedObject)
     {
 
-        possessedObject = clickedObject;
-        mainCamera.transform.position = new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, -10);
-        mainCamera.transform.parent = clickedObject.transform;
-        player.GetComponent<PlayerValuesScript>().playerHealth = clickedObject.GetComponent<SpiritHealth>().currentHealth;
-        clickedObject.GetComponent<PlayerMoverment>().possessed = true;
-        clickedObject.GetComponent<NavMeshAgent2D>().enabled = false;
-        clickedObject.GetComponent<Ghost>().enabled = false;
-        clickedObject.gameObject.GetComponent<Ghost>().IsPossessed(true);
-        //Set player health to health of the possessed object
+        //When player possesses a spirit:
+        // 1) The health and positions of the AI spirit are stored temporarily 
+        // 2) The AI Spirit is Destroyed
+        // 3) The player Spirit is instantiated in the same position, inheriting the health of the AI Spirit
+        // 4) Camera is made a child of the player spirit
 
-
-
-        //Set clickedObject's possessed variable to true
-        //Move camera to same position on X/Y axis as the clicked object 
-        //Make camera a child of the possessed Object
-
+        possessedGhostHealth = clickedObject.GetComponent<SpiritHealth>().currentHealth;
+        possessedGhostPosition = clickedObject.transform.position;
+        Destroy(clickedObject.gameObject);
+        newPlayer = Instantiate(playerSpirit) as GameObject;
+        playerSpirit.transform.position = possessedGhostPosition;
+        playerSpirit.GetComponent<PlayerValuesScript>().playerHealth = possessedGhostHealth;
+        
+        
+        possessedObject = true;
     }
 
-  
+
 }
+
+
+
+

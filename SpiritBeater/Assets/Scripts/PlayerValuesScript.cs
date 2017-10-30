@@ -21,6 +21,7 @@ public class PlayerValuesScript : MonoBehaviour {
         if (playerHealth == 0)
         {
             //go to results screen
+            //Endgame 
         }
 	}
 }

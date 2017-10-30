@@ -24,9 +24,7 @@ public class Ghost : MonoBehaviour
     //if idle work, if not go to player
     bool idle = true;
     bool isHome = true;
-
-
-    public enum SpiritState 
+    public enum SpiritState
     {
         Idle,
         Suspicious,
@@ -42,43 +40,49 @@ public class Ghost : MonoBehaviour
         spiritState = SpiritState.Idle;
         FOV = GameObject.Find("FOV");
         nav = GetComponent<NavMeshAgent2D>();
+
+        GameObject[] terminalList = GameObject.FindGameObjectsWithTag("terminal");
+        terminals.AddRange(terminalList);
+
         int i = Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
+
         OGtargetTime = terminalTime;
     }
 
     void Update()
     {
-        if (timerActive)
-        {
-            //if returning to home terminal (terminal[0]) then stay for longer
-            if (idleDest == terminals[0].transform.position)
-            {
-                terminalTime = homeTime;
-            }
-            currentTime += Time.deltaTime;
-            if (currentTime >= terminalTime)
-            {
-                moveTarget = true;
-                timerActive = false;
-                currentTime = 0f;
-            }
-            terminalTime = OGtargetTime;
-        }
-
-        if (moveTarget)
-        {
-            SetTarget();
-            moveTarget = false;
-        }
-        Move();
         
+            if (timerActive)
+            {
+                //if returning to home terminal (terminal[5]) then stay for longer
+                if (idleDest == terminals[5].transform.position)
+                {
+                    terminalTime = homeTime;
+                }
+                currentTime += Time.deltaTime;
+                if (currentTime >= terminalTime)
+                {
+                    moveTarget = true;
+                    timerActive = false;
+                    currentTime = 0f;
+                }
+                terminalTime = OGtargetTime;
+            }
+
+            if (moveTarget)
+            {
+                SetTarget();
+                moveTarget = false;
+            }
+            Move();
+      //  }
     }
 
     void Move()
     {
-        switch(spiritState)
+        switch (spiritState)
         {
             case SpiritState.Idle:
                 nav.destination = idleDest;
@@ -86,7 +90,18 @@ public class Ghost : MonoBehaviour
             case SpiritState.Attack:
                 nav.destination = player.transform.position;
                 break;
-        }     
+        }
+
+        if (idle == true)
+            {
+                GetComponent<NavMeshAgent2D>().destination = idleDest;
+            }
+            else if (idle == false)
+            {
+                GetComponent<NavMeshAgent2D>().destination = player.transform.position;
+            }
+        
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
