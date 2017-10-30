@@ -27,7 +27,7 @@ public class Punch : MonoBehaviour {
                 time = 0.0f;
                 foreach(Collider2D item in list)
                 {
-                    //Take Damage
+                    item.gameObject.GetComponent<SpiritHealth>().DecreaseHealth();
                 }
             }
 

@@ -25,10 +25,10 @@ public class SpiritHealth : MonoBehaviour {
 		
 	}
 
-	void DecreaseHealth()
+	public void DecreaseHealth()
 	{
 		currentHealth -= 2f;
-
+        //dollah
 		//scales numbers for healthbar
 		float calculateHealth = currentHealth / maxHealth;
 		SetHealthBar (calculateHealth);
@@ -38,4 +38,9 @@ public class SpiritHealth : MonoBehaviour {
 	{
 		healthBar.transform.localScale = new Vector3 (health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
 	}
+
+    public float getHealth()
+    {
+        return currentHealth;
+    }
 }
