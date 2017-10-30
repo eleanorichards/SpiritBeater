@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerValuesScript : MonoBehaviour {
 
     // Use this for initialization
-    public int playerHealth = -1;
+    public float playerHealth = -1;
     public float money = 0;
     
 

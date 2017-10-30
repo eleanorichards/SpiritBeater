@@ -94,12 +94,16 @@ public class BodyTransferScript : MonoBehaviour {
     {
         //Set possessedObject to null
         //unparent camera from possessed object if necessary
+        possessedObject.GetComponent<PlayerMoverment>().possessed = false;
+        possessedObject.GetComponent<NavMeshAgent2D>().enabled = true;
+         possessedObject.GetComponent<Ghost>().enabled = true;
         possessedObject = null;
         mainCamera.transform.parent = null;
         isRecalling = false;
         recallTimer = 60.0f;
         player.GetComponent<PlayerValuesScript>().playerHealth = -1;
-        // set player's health to -1 
+
+        
         
        
 
@@ -111,6 +115,10 @@ public class BodyTransferScript : MonoBehaviour {
         possessedObject = clickedObject;
         mainCamera.transform.position = new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, -10);
         mainCamera.transform.parent = clickedObject.transform;
+        player.GetComponent<PlayerValuesScript>().playerHealth = clickedObject.GetComponent<SpiritHealth>().currentHealth;
+        clickedObject.GetComponent<PlayerMoverment>().possessed = true;
+        clickedObject.GetComponent<NavMeshAgent2D>().enabled = false;
+        clickedObject.GetComponent<Ghost>().enabled = false;
         //Set player health to health of the possessed object
 
 

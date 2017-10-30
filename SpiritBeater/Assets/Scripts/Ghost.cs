@@ -14,6 +14,7 @@ public class Ghost : MonoBehaviour
     public bool timerActive = false;
     public Vector3 idleDest;
     int previousPosition;
+    
 
     int maxTime;
     int minTime;
@@ -34,40 +35,46 @@ public class Ghost : MonoBehaviour
 
     void Update()
     {
-        if (timerActive)
+        if (GetComponent<PlayerMoverment>().possessed == false)
         {
-            //if returning to home terminal (terminal[0]) then stay for longer
-            if (idleDest == terminals[0].transform.position)
+            if (timerActive)
             {
-                terminalTime = homeTime;
+                //if returning to home terminal (terminal[0]) then stay for longer
+                if (idleDest == terminals[0].transform.position)
+                {
+                    terminalTime = homeTime;
+                }
+                currentTime += Time.deltaTime;
+                if (currentTime >= terminalTime)
+                {
+                    moveTarget = true;
+                    timerActive = false;
+                    currentTime = 0f;
+                }
+                terminalTime = OGtargetTime;
             }
-            currentTime += Time.deltaTime;
-            if (currentTime >= terminalTime)
-            {
-                moveTarget = true;
-                timerActive = false;
-                currentTime = 0f;
-            }
-            terminalTime = OGtargetTime;
-        }
 
-        if (moveTarget)
-        {
-            SetTarget();
-            moveTarget = false;
+            if (moveTarget)
+            {
+                SetTarget();
+                moveTarget = false;
+            }
+            Move();
         }
-        Move();
     }
 
     void Move()
     {
-        if (idle == true)
+        if (GetComponent<PlayerMoverment>().possessed == false)
         {
-            GetComponent<NavMeshAgent2D>().destination = idleDest;
-        }
-        else if(idle == false)
-        {
-            GetComponent<NavMeshAgent2D>().destination = player.transform.position;
+            if (idle == true)
+            {
+                GetComponent<NavMeshAgent2D>().destination = idleDest;
+            }
+            else if (idle == false)
+            {
+                GetComponent<NavMeshAgent2D>().destination = player.transform.position;
+            }
         }
 
     }
