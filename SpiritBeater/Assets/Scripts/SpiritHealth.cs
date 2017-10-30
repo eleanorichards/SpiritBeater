@@ -7,7 +7,7 @@ public class SpiritHealth : MonoBehaviour {
 	public float maxHealth = 100f;
 	public float currentHealth;
 	public GameObject healthBar;
-
+	public Dollah dollah;
 
 
 	// Use this for initialization
@@ -28,7 +28,7 @@ public class SpiritHealth : MonoBehaviour {
 	void DecreaseHealth()
 	{
 		currentHealth -= 2f;
-
+		dollah.IncreaseCombo ();
 		//scales numbers for healthbar
 		float calculateHealth = currentHealth / maxHealth;
 		SetHealthBar (calculateHealth);
