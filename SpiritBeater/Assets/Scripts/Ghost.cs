@@ -16,6 +16,7 @@ public class Ghost : MonoBehaviour
     int previousPosition;
     private GameObject FOV = null;
     private bool possessed = false;
+    private NavMeshAgent2D nav;
 
     int maxTime;
     int minTime;
@@ -24,12 +25,23 @@ public class Ghost : MonoBehaviour
     bool idle = true;
     bool isHome = true;
 
+
+    public enum SpiritState 
+    {
+        Idle,
+        Suspicious,
+        Attack
+    }
+
+    public SpiritState spiritState;
+
     public List<GameObject> terminals = new List<GameObject>();
 
     void Start()
     {
+        spiritState = SpiritState.Idle;
         FOV = GameObject.Find("FOV");
-
+        nav = GetComponent<NavMeshAgent2D>();
         int i = Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
@@ -38,48 +50,43 @@ public class Ghost : MonoBehaviour
 
     void Update()
     {
-        if (!possessed)
+        if (timerActive)
         {
-            if (timerActive)
+            //if returning to home terminal (terminal[0]) then stay for longer
+            if (idleDest == terminals[0].transform.position)
             {
-                //if returning to home terminal (terminal[0]) then stay for longer
-                if (idleDest == terminals[0].transform.position)
-                {
-                    terminalTime = homeTime;
-                }
-                currentTime += Time.deltaTime;
-                if (currentTime >= terminalTime)
-                {
-                    moveTarget = true;
-                    timerActive = false;
-                    currentTime = 0f;
-                }
-                terminalTime = OGtargetTime;
+                terminalTime = homeTime;
             }
-
-            if (moveTarget)
+            currentTime += Time.deltaTime;
+            if (currentTime >= terminalTime)
             {
-                SetTarget();
-                moveTarget = false;
+                moveTarget = true;
+                timerActive = false;
+                currentTime = 0f;
             }
-            Move();
+            terminalTime = OGtargetTime;
         }
+
+        if (moveTarget)
+        {
+            SetTarget();
+            moveTarget = false;
+        }
+        Move();
+        
     }
 
     void Move()
     {
-        if (GetComponent<PlayerMoverment>().possessed == false)
+        switch(spiritState)
         {
-            if (idle == true)
-            {
-                GetComponent<NavMeshAgent2D>().destination = idleDest;
-            }
-            else if (idle == false)
-            {
-                GetComponent<NavMeshAgent2D>().destination = player.transform.position;
-            }
-        }
-
+            case SpiritState.Idle:
+                nav.destination = idleDest;
+                break;
+            case SpiritState.Attack:
+                nav.destination = player.transform.position;
+                break;
+        }     
     }
 
     void OnTriggerEnter2D(Collider2D other)
