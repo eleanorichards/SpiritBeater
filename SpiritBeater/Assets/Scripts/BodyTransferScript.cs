@@ -94,9 +94,10 @@ public class BodyTransferScript : MonoBehaviour {
     {
         //Set possessedObject to null
         //unparent camera from possessed object if necessary
-        possessedObject.GetComponent<PlayerMoverment>().possessed = false;
+
+        possessedObject.GetComponent<PlayerMoverment>().IsPossessed(false);
         possessedObject.GetComponent<NavMeshAgent2D>().enabled = true;
-         possessedObject.GetComponent<Ghost>().enabled = true;
+        possessedObject.GetComponent<Ghost>().enabled = true;
         possessedObject = null;
         mainCamera.transform.parent = null;
         isRecalling = false;
@@ -112,6 +113,7 @@ public class BodyTransferScript : MonoBehaviour {
     //This function will trigger when the player clicks on an object
     void Possess(GameObject clickedObject)
     {
+
         possessedObject = clickedObject;
         mainCamera.transform.position = new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, -10);
         mainCamera.transform.parent = clickedObject.transform;
@@ -119,6 +121,7 @@ public class BodyTransferScript : MonoBehaviour {
         clickedObject.GetComponent<PlayerMoverment>().possessed = true;
         clickedObject.GetComponent<NavMeshAgent2D>().enabled = false;
         clickedObject.GetComponent<Ghost>().enabled = false;
+        clickedObject.gameObject.GetComponent<Ghost>().IsPossessed(true);
         //Set player health to health of the possessed object
 
 

@@ -14,7 +14,8 @@ public class Ghost : MonoBehaviour
     public bool timerActive = false;
     public Vector3 idleDest;
     int previousPosition;
-    
+    private GameObject FOV = null;
+    private bool possessed = false;
 
     int maxTime;
     int minTime;
@@ -27,6 +28,8 @@ public class Ghost : MonoBehaviour
 
     void Start()
     {
+        FOV = GameObject.Find("FOV");
+
         int i = Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
@@ -35,7 +38,7 @@ public class Ghost : MonoBehaviour
 
     void Update()
     {
-        if (GetComponent<PlayerMoverment>().possessed == false)
+        if (!possessed)
         {
             if (timerActive)
             {
@@ -111,15 +114,11 @@ public class Ghost : MonoBehaviour
         idleDest = terminals[i].transform.position;
         previousPosition = i;
     }
-    //void SetTarget()
-    //{
-    //    int i = Random.Range(0, terminals.Count);
 
-    //    while (previousPosition == i)
-    //    {
-    //        i = Random.Range(0, terminals.Count);
-    //    }
-    //    idleDest = terminals[i].transform.position;
-    //    previousPosition = i;
-    //}
+
+    public void IsPossessed(bool _possessed)
+    {
+        possessed = _possessed;
+    }
+
 }

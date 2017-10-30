@@ -9,11 +9,11 @@ public class PlayerMoverment : MonoBehaviour
     public float speed, dragSpeed;
     private bool directionIsLeft;
     public bool possessed = false;
-
+    private Rigidbody2D rig;
     // Use this for initialization
     void Start()
     {
-
+        rig = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -36,11 +36,11 @@ public class PlayerMoverment : MonoBehaviour
 
             //move
             //GetComponent<Rigidbody2D>().AddForce(velocity, ForceMode2D.Impulse);//new Vector2(velocity.x * acceleration, velocity.y * acceleration), ForceMode2D.Impulse);
-            GetComponent<Rigidbody2D>().velocity = velocity;
+            rig.velocity = velocity;
             //clamp velocity
-            GetComponent<Rigidbody2D>().velocity = new Vector2(
-                Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.x, -speed, speed),
-                Mathf.Clamp(GetComponent<Rigidbody2D>().velocity.y, -speed, speed));
+            rig.velocity = new Vector2(
+            Mathf.Clamp(rig.velocity.x, -speed, speed),
+            Mathf.Clamp(rig.velocity.y, -speed, speed));
         }
         //set direction
         //	if (GetComponent<Rigidbody2D> ().velocity.x < 0) {
@@ -56,5 +56,11 @@ public class PlayerMoverment : MonoBehaviour
         //public bool GetDirection(){
         //	return directionIsLeft;
         //}
+    }
+
+
+    public void IsPossessed(bool _possessed)
+    {
+        possessed = _possessed;
     }
 }
