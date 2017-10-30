@@ -12,7 +12,8 @@ public class SpiritView : MonoBehaviour
     [Range(0,360)]
     public float view_angle;
 
-    private LayerMask obstacleMask = 8;
+    public LayerMask ignoreMask; //Layers to ignore when raycasting
+    public LayerMask acceptMask; //anything you want to return in the view radius
 
     //[HideInInspector]
     public List<GameObject> spirits = new List<GameObject>(100);
@@ -30,22 +31,29 @@ public class SpiritView : MonoBehaviour
 
     private void FOVCast()
     {
-
-        Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius);
-        Debug.Log(spiritsInRadius.Length);
-        //find angle between my agent and the hit is it in my field of view
+        //any spiritsInRadius are in the circle
+        Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius, acceptMask);
+        spirits.Clear();
         foreach (Collider2D spirit in spiritsInRadius)
         {
-            print("searching");
+            Debug.Log(spirit.name);
             Transform target = spirit.transform;
             Vector3 ray_direction = (spirit.transform.position - transform.position);
-            if(Vector3.Angle(transform.up, ray_direction) < view_angle /2)
+            //find angle between my agent and the hit is it in my field of view
+            if (Vector3.Angle(transform.forward, ray_direction) < view_angle/* /2*/)
             {
-                if(!Physics2D.Raycast(transform.position, ray_direction, 50.0f, obstacleMask))
+                //this is inside the view angle
+                if (!Physics2D.Raycast(transform.position, ray_direction, 50.0f, ignoreMask))
                 {
+                    //if player found
+                    //if(!player.stealth())
+                    //warn all spiritsInRadius
+                    //send to Ghost
+                    if(!spirits.Contains(target.gameObject) && target.gameObject != gameObject)
                     spirits.Add(target.gameObject);
                     Debug.DrawLine(transform.position, target.transform.position, Color.red);
                 }
+
             }
            
             
@@ -63,11 +71,7 @@ public class SpiritView : MonoBehaviour
     }
 
 
-    //ray_direction = (spirit.transform.position - transform.position).normalized;
-    //view_angle = Vector2.Angle(ray_direction, transform.forward);
-
-    //RaycastHit2D hit = Physics2D.Raycast(transform.position, ray_direction.normalized);
-
+    
     //if(hit.collider.gameObject.CompareTag("Spirit"))
     //{
     //    Debug.DrawLine(transform.position, ray_direction.normalized, Color.red);
@@ -85,9 +89,9 @@ public class SpiritView : MonoBehaviour
 
     //void OnTriggerExit2D(Collider2D col)
     //{
-    //   if (col.CompareTag("Spirit"))
+    //    if (col.CompareTag("Spirit"))
     //    {
-    //        for(int i = spirits.Count; i >= 0; i--)
+    //        for (int i = spirits.Count; i >= 0; i--)
     //        {
     //            print("Spirit removed from list: " + col.gameObject.name);
     //            spirits.RemoveAt(i);
