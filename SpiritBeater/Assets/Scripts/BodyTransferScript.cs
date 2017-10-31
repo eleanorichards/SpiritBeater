@@ -46,7 +46,7 @@ public class BodyTransferScript : MonoBehaviour {
 
             if(Input.GetMouseButton(0))
             {
-                Debug.Log("CLick");
+                //Debug.Log("CLick");
                 //RaycastHit2D hitInfo = new RaycastHit2D();
                 Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 
@@ -54,10 +54,10 @@ public class BodyTransferScript : MonoBehaviour {
                 if (hit.collider != null)
                 {
                     
-                    Debug.Log("Hit " + hit.collider.transform.gameObject.name);
+                    //Debug.Log("Hit " + hit.collider.transform.gameObject.name);
                     if (hit.collider.transform.gameObject.tag == "Spirit")
                     {
-                        Debug.Log("It's working!");
+                        //Debug.Log("It's working!");
                         GameObject target = hit.collider.transform.gameObject;
                         Possess(target);
                     }
@@ -66,7 +66,7 @@ public class BodyTransferScript : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("No hit");
+                    //Debug.Log("No hit");
                 }
                 
             }
@@ -126,7 +126,7 @@ public class BodyTransferScript : MonoBehaviour {
         Ghost.transform.position = possessedGhostPosition;
         newGhost = Instantiate(Ghost) as GameObject;
         
-        Debug.Log("Transform chosen");
+        //Debug.Log("Transform chosen");
         //Ghost.GetComponent<NavMeshAgent2D>().enabled = true;
         //Ghost.transform.position = possessedGhostPosition;
         

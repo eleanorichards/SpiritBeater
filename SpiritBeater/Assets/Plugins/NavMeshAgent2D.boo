@@ -55,7 +55,7 @@ class NavMeshAgent2D(MonoBehaviour):
             # stop agent movement, reset it to current position
             agent.ResetPath()
             agent.transform.position = project_to_3d(transform.position)
-            Debug.Log("stopped agent because of collision in 2D plane")
+           // Debug.Log("stopped agent because of collision in 2D plane")
         
     def OnDestroy():
         # destroy projection if not destroyed yet
