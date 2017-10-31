@@ -20,7 +20,7 @@ public class DollahTextScript : MonoBehaviour {
 	void Update () {
 
         score = player.GetComponent<Dollah>().DollahScore;
-        GetComponent<UnityEngine.UI.Text>().text = ":" + score.ToString();
+        GetComponent<UnityEngine.UI.Text>().text = score.ToString() + "/3500";
 		
 	}
 }
