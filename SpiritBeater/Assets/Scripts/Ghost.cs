@@ -17,13 +17,10 @@ public class Ghost : MonoBehaviour
     private GameObject FOV = null;
     private bool possessed = false;
     private NavMeshAgent2D nav;
-<<<<<<< HEAD
 
 
     private GameObject[] spirList;
-=======
     private Rigidbody2D rig;
->>>>>>> origin/master
     int maxTime;
     int minTime;
     public float timer = 0.0f;
