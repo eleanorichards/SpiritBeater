@@ -26,6 +26,10 @@ public class Ghost : MonoBehaviour
     int minTime;
     public float timer = 0.0f;
 
+    private GameObject[] playList;
+    private bool Updatebool = true;
+
+
     private Vector2 dist = new Vector2();
     private Vector2 distprevframe = new Vector2();
     private Vector2 dir = new Vector2();
@@ -63,7 +67,11 @@ public class Ghost : MonoBehaviour
 
     void Update()
     {
-
+        if (Updatebool == true && GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            playList = GameObject.FindGameObjectsWithTag("Player");
+            Updatebool = false;
+        }
         if (timerActive)
         {
 
@@ -109,14 +117,14 @@ public class Ghost : MonoBehaviour
             case SpiritState.Attack:
                 foreach (GameObject obj in spirList)
                 {
-                    if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                    foreach (GameObject playObj in playList)
                     {
-                        huntedPos = player.transform.position;
+                        huntedPos = playObj.transform.position;
                     }
                 }
                 foreach (GameObject obj in spirList)
                 {
-                    if (obj.GetComponent<Ghost>().spiritState != Ghost.SpiritState.Suspicious)
+                    if (obj != null && obj.GetComponent<Ghost>().spiritState != Ghost.SpiritState.Suspicious)
                     {
                         nav.destination = huntedPos;
                     }
@@ -188,4 +196,12 @@ public class Ghost : MonoBehaviour
         possessed = _possessed;
     }
 
+    public void isSuspicious()
+    {
+        spiritState = SpiritState.Suspicious;
+    }
+    public void isAttacking()
+    {
+        spiritState = SpiritState.Attack;
+    }
 }

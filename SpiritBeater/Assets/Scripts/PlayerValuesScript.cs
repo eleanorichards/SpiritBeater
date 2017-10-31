@@ -14,10 +14,16 @@ public class PlayerValuesScript : MonoBehaviour {
         Idle,
         Attacking
     }
-
+    public enum PlayerbehavourState
+    {
+        Hidden,
+        Suspicious
+    }
     public PlayerState playerState;
+    public PlayerbehavourState behaveState;
 	void Start () {
         playerState = PlayerState.Idle;
+        behaveState = PlayerbehavourState.Hidden;
 	}
 	
 	// Update is called once per frame
@@ -34,5 +40,10 @@ public class PlayerValuesScript : MonoBehaviour {
     public void notAttacking()
     {
         playerState = PlayerState.Idle;
+    }
+
+    public void isSuspicious()
+    {
+        behaveState = PlayerbehavourState.Suspicious;
     }
 }

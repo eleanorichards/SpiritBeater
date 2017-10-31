@@ -49,20 +49,34 @@ public class SpiritView : MonoBehaviour
                 {
                     if (spirit.CompareTag("Player"))
                     {
-                        print("Player in view");
-                        //if(spirit.GetComponent<Attack_Script>().IsAttacking())
-                        //{                           
+                        if (spirit.gameObject.GetComponent<PlayerValuesScript>().playerState == PlayerValuesScript.PlayerState.Attacking)
+                        {
+                            spirit.gameObject.GetComponent<PlayerValuesScript>().isSuspicious();
+                        }
+                        if (spirit.gameObject.GetComponent<PlayerValuesScript>().behaveState == PlayerValuesScript.PlayerbehavourState.Suspicious)
+                        {
+                            gameObject.transform.parent.GetComponent<Ghost>().isAttacking();
+                        }
+                            //if(spirit.GetComponent<Attack_Script>().IsAttacking())
+                            //{                           
                             //i'm not sure if states are actually working...
                             //this.parent.GetComponent<Ghost>().spiritState = Ghost.SpiritState.Attack;
-                        //}
-                        Debug.DrawLine(transform.position, target.transform.position, Color.green);
+                            //}
+                            Debug.DrawLine(transform.position, target.transform.position, Color.green);
 
                     }
-                    else
+                    else if (spirit.CompareTag("Spirit"))
                     {
-                        Debug.DrawLine(transform.position, target.transform.position, Color.red);
-
+                        if (spirit.gameObject.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                        {
+                            print("suspicious");
+                        }
                     }
+                    //else
+                    //{
+                    //    Debug.DrawLine(transform.position, target.transform.position, Color.red);
+
+                    //}
                                       
                     if (!spirits.Contains(target.gameObject) && target.gameObject != gameObject.transform.parent)
                     {
