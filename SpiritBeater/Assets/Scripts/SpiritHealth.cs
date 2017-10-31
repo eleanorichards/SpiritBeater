@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpiritHealth : MonoBehaviour {
 
@@ -22,8 +23,10 @@ public class SpiritHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        float calculateHealth = currentHealth / maxHealth;
+        SetHealthBar(calculateHealth);
+
+    }
 
 	public void DecreaseHealth()
 	{
@@ -34,6 +37,7 @@ public class SpiritHealth : MonoBehaviour {
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
+               
             }
                 
             
@@ -50,7 +54,15 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void SetHealthBar(float health)
 	{
-		healthBar.transform.localScale = new Vector3 (health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        if(this.gameObject.tag == "Player")
+        {
+            healthBar.transform.localScale = new Vector3(health*5, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        }
+        else
+        {
+            healthBar.transform.localScale = new Vector3(health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        }
+		
 	}
 
     public float getHealth()
