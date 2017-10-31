@@ -176,16 +176,10 @@ public class Ghost : MonoBehaviour
     void SetTarget()
     {
         int i = Random.Range(0, terminals.Count);
-
-        if (previousPosition != 0)
-        {
-            i = 0;
-        }
-        else
+        if (previousPosition == i)
         {
             i = Random.Range(0, terminals.Count);
         }
-
         idleDest = terminals[i].transform.position;
         previousPosition = i;
     }
