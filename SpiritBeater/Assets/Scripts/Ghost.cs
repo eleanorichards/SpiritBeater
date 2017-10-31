@@ -57,7 +57,7 @@ public class Ghost : MonoBehaviour
             if (timerActive)
             {
                 //if returning to home terminal (terminal[5]) then stay for longer
-                if (idleDest == terminals[5].transform.position)
+                if (idleDest == terminals[4].transform.position)
                 {
                     terminalTime = homeTime;
                 }
