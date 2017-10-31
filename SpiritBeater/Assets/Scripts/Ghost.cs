@@ -17,9 +17,14 @@ public class Ghost : MonoBehaviour
     private GameObject FOV = null;
     private bool possessed = false;
     private NavMeshAgent2D nav;
-
+    private Rigidbody2D rig;
     int maxTime;
     int minTime;
+    public float timer = 0.0f;
+
+    private Vector2 dist = new Vector2();
+    private Vector2 distprevframe = new Vector2();
+    private Vector2 dir = new Vector2();
 
     //if idle work, if not go to player
     bool idle = true;
@@ -38,9 +43,9 @@ public class Ghost : MonoBehaviour
     void Start()
     {
         spiritState = SpiritState.Idle;
-        FOV = GameObject.Find("FOV");
+        FOV = GetComponentInChildren<SpiritView>().gameObject;
         nav = GetComponent<NavMeshAgent2D>();
-
+        rig = GetComponent<Rigidbody2D>();
         GameObject[] terminalList = GameObject.FindGameObjectsWithTag("terminal");
         terminals.AddRange(terminalList);
 
@@ -53,35 +58,44 @@ public class Ghost : MonoBehaviour
 
     void Update()
     {
-        
-            if (timerActive)
-            {
-                //if returning to home terminal (terminal[5]) then stay for longer
-                if (idleDest == terminals[4].transform.position)
-                {
-                    terminalTime = homeTime;
-                }
-                currentTime += Time.deltaTime;
-                if (currentTime >= terminalTime)
-                {
-                    moveTarget = true;
-                    timerActive = false;
-                    currentTime = 0f;
-                }
-                terminalTime = OGtargetTime;
-            }
 
-            if (moveTarget)
+        if (timerActive)
+        {
+
+            //if returning to home terminal (terminal[5]) then stay for longer
+            if (idleDest == terminals[5].transform.position)
             {
-                SetTarget();
-                moveTarget = false;
+                terminalTime = homeTime;
             }
-            Move();
-      //  }
+            currentTime += Time.deltaTime;
+            if (currentTime >= terminalTime)
+            {
+                moveTarget = true;
+                timerActive = false;
+                currentTime = 0f;
+            }
+            terminalTime = OGtargetTime;
+        }
+
+        if (moveTarget)
+        {
+            SetTarget();
+            moveTarget = false;
+        }
+        Move();
+        //  }
     }
 
     void Move()
     {
+        timer += Time.deltaTime;
+
+        if (timer >= 0.05f)
+        {
+            FOVRotation();
+            timer = 0;
+        }
+
         switch (spiritState)
         {
             case SpiritState.Idle:
@@ -92,15 +106,28 @@ public class Ghost : MonoBehaviour
                 break;
         }
 
-        if (idle == true)
-            {
-                GetComponent<NavMeshAgent2D>().destination = idleDest;
-            }
-            else if (idle == false)
-            {
-                GetComponent<NavMeshAgent2D>().destination = player.transform.position;
-            }
-        
+        //if (idle == true)
+        //    {
+        //        GetComponent<NavMeshAgent2D>().destination = idleDest;
+        //    }
+        //    else if (idle == false)
+        //    {
+        //        GetComponent<NavMeshAgent2D>().destination = player.transform.position;
+        //    }
+
+
+    }
+
+    void FOVRotation()
+    {
+
+        dist = FOV.transform.position;
+        dir = dist - distprevframe;
+        dir = dir * 90;
+        distprevframe = FOV.transform.position;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        FOV.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
     }
 
@@ -132,7 +159,7 @@ public class Ghost : MonoBehaviour
         {
             i = Random.Range(0, terminals.Count);
         }
-        
+
         idleDest = terminals[i].transform.position;
         previousPosition = i;
     }

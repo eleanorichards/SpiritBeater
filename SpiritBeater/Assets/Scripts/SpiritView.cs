@@ -5,20 +5,19 @@ using UnityEngine;
 public class SpiritView : MonoBehaviour
 {
 
-    public float max_view_angle = 110.0f;
     Vector2 ray_direction = Vector2.zero;
 
     public float view_radius = 5.0f;
-    [Range(0,360)]
+    [Range(0, 360)]
     public float view_angle;
 
-    public LayerMask ignoreMask; //Layers to ignore when raycasting
+    public LayerMask ignoreMask; //Set to spirit and player
     public LayerMask acceptMask; //anything you want to return in the view radius
     private LayerMask me = 10;
     private GameObject parent;
     //[HideInInspector]
     public List<GameObject> spirits = new List<GameObject>(100);
-   
+
     // Use this for initialization
     void Start()
     {
@@ -34,31 +33,41 @@ public class SpiritView : MonoBehaviour
     private void FOVCast()
     {
         //any spiritsInRadius are in the circle
-        Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius, acceptMask);
         spirits.Clear();
+        Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius, acceptMask);
         //myself.layer = 10;
         foreach (Collider2D spirit in spiritsInRadius)
         {
-            Debug.Log(spirit.name);
             Transform target = spirit.transform;
             Vector3 ray_direction = (spirit.transform.position - transform.position);
             //find angle between my agent and the hit is it in my field of view
-            if (Vector3.Angle(transform.forward, ray_direction) < view_angle/* /2*/)
+            if (Vector3.Angle(transform.up, ray_direction) < view_angle /2)
             {
                 //this is inside the view angle
                 if (!Physics2D.Raycast(transform.position, ray_direction, 50.0f, me))
                 {
-                    //if player found
-                   // parent.GetComponent<Ghost>().spiritState = Ghost.SpiritState.Attack;
-                    //if(!player.stealth())
-                    //warn all spiritsInRadius
-                    //send to Ghost
-                    if(!spirits.Contains(target.gameObject) && target.gameObject != gameObject.transform.parent)
-                    spirits.Add(target.gameObject);
-                    Debug.DrawLine(transform.position, target.transform.position, Color.red);
+                    if (spirit.CompareTag("Player"))
+                    {
+                        //if(spirit.GetComponent<>)
+                        print("Player in view");
+                        Debug.DrawLine(transform.position, target.transform.position, Color.green);
+                        parent.GetComponent<Ghost>().spiritState = Ghost.SpiritState.Attack;
+
+                    }
+                    else
+                    {
+                        Debug.DrawLine(transform.position, target.transform.position, Color.red);
+
+                    }
+                                      
+                    if (!spirits.Contains(target.gameObject) && target.gameObject != gameObject.transform.parent)
+                    {
+                        spirits.Add(target.gameObject);
+
+                    }
                 }
 
-            }         
+            }
         }
         //myself.layer = 9;
 
@@ -74,32 +83,6 @@ public class SpiritView : MonoBehaviour
     }
 
 
-    
-    //if(hit.collider.gameObject.CompareTag("Spirit"))
-    //{
-    //    Debug.DrawLine(transform.position, ray_direction.normalized, Color.red);
-    //    print("Spirit in sight");
-    //}          
-    //void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    if (col.CompareTag("Spirit"))
-    //    {
-    //        spirits.Add(col.gameObject);
-    //        print("Spirit added to list: " + col.gameObject.name);
-    //    }
-    //}
 
-
-    //void OnTriggerExit2D(Collider2D col)
-    //{
-    //    if (col.CompareTag("Spirit"))
-    //    {
-    //        for (int i = spirits.Count; i >= 0; i--)
-    //        {
-    //            print("Spirit removed from list: " + col.gameObject.name);
-    //            spirits.RemoveAt(i);
-    //        }
-    //    }
-    //}
 
 }
