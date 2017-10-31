@@ -21,7 +21,7 @@ public class BodyTransferScript : MonoBehaviour {
     GameObject newPlayer;
     GameObject newGhost;
 
-
+    public LayerMask acceptMask;
 
 
 
@@ -46,20 +46,22 @@ public class BodyTransferScript : MonoBehaviour {
 
             if(Input.GetMouseButton(0))
             {
-               
+                Debug.Log("CLick");
                 //RaycastHit2D hitInfo = new RaycastHit2D();
                 Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
 
-                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, acceptMask);
                 if (hit.collider != null)
                 {
-                    //Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+                    
+                    Debug.Log("Hit " + hit.collider.transform.gameObject.name);
                     if (hit.collider.transform.gameObject.tag == "Spirit")
                     {
                         Debug.Log("It's working!");
                         GameObject target = hit.collider.transform.gameObject;
                         Possess(target);
                     }
+
                    
                 }
                 else
