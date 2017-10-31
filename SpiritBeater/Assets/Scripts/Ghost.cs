@@ -219,6 +219,10 @@ public class Ghost : MonoBehaviour
         spiritState = SpiritState.Attack;
         emotions.SetEmotion(Emotions.ANGRY);
     }
+    public void isIdle()
+    {
+        spiritState = SpiritState.Idle;
+    }
     public Vector3 hunterpos()
     {
         foreach(GameObject obj in spirList)

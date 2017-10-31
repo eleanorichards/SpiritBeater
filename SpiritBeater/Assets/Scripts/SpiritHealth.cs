@@ -71,7 +71,7 @@ public class SpiritHealth : MonoBehaviour {
             emotions.SetEmotion(Emotions.SAD);
             if(currentHealth <= 0f)
             {
-                Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
+                //Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
                 dollah.AddDollah(false);
                 Debug.Log("Spirit Died");
                 Destroy(gameObject);
