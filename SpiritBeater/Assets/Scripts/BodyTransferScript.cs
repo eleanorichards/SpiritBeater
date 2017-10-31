@@ -114,19 +114,26 @@ public class BodyTransferScript : MonoBehaviour {
 
 
         //We will want to change this to spirit health soon rather than using playervaluescript
-        possessedGhostHealth = playerSpirit.GetComponent<PlayerValuesScript>().playerHealth;
-        possessedGhostPosition = playerSpirit.transform.position;
+        possessedGhostHealth = newPlayer.GetComponent<SpiritHealth>().currentHealth;
+        possessedGhostPosition = newPlayer.transform.position;
         mainCamera.transform.parent = null;
+        mainCamera.transform.position = new Vector3(0, 0, -10);
         isRecalling = false;
         recallTimer = 60.0f;
         Destroy(objectToLeave.gameObject);
-        newGhost = Instantiate(Ghost) as GameObject;
+
         Ghost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
         Ghost.transform.position = possessedGhostPosition;
+        newGhost = Instantiate(Ghost) as GameObject;
+        
+        Debug.Log("Transform chosen");
+        //Ghost.GetComponent<NavMeshAgent2D>().enabled = true;
+        //Ghost.transform.position = possessedGhostPosition;
+        
 
-      
-
-
+        
+        //newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
+        //newGhost.transform.position = possessedGhostPosition;
         possessedObject = false;
 
 
@@ -147,8 +154,8 @@ public class BodyTransferScript : MonoBehaviour {
         possessedGhostPosition = clickedObject.transform.position;
         Destroy(clickedObject.gameObject);
         newPlayer = Instantiate(playerSpirit) as GameObject;
-        playerSpirit.transform.position = possessedGhostPosition;
-        playerSpirit.GetComponent<PlayerValuesScript>().playerHealth = possessedGhostHealth;
+        newPlayer.transform.position = possessedGhostPosition;
+        newPlayer.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
         
         
         
