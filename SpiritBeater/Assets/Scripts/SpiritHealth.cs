@@ -29,13 +29,15 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void DecreaseHealth()
 	{
-		currentHealth -= 2f;
-        if(this.gameObject.tag == "Player Spirit")
+		currentHealth -= 20f;
+        if(this.gameObject.tag == "Player")
         {
             if(currentHealth == 0f)
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
+                SceneManager.LoadScene(1);
+
                
             }
                 
@@ -43,7 +45,12 @@ public class SpiritHealth : MonoBehaviour {
         }
         else
         {
-            dollah.IncreaseCombo();
+            //dollah.IncreaseCombo();
+            if(currentHealth == 0f)
+            {
+                Debug.Log("Spirit Died");
+                Destroy(gameObject);
+            }
         }
 		
 		//scales numbers for healthbar
@@ -53,14 +60,9 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void SetHealthBar(float health)
 	{
-        if(this.gameObject.tag == "Player")
-        {
-            healthBar.transform.localScale = new Vector3(health*5, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-        }
-        else
-        {
+        
             healthBar.transform.localScale = new Vector3(health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-        }
+        
 		
 	}
 

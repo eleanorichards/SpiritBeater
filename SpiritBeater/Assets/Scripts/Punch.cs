@@ -7,7 +7,7 @@ public class Punch : MonoBehaviour {
     private EnemiesInRange range;
     private List<Collider2D> list;
     private float time = 0.0f;
-    private float timeBetweenPunches = 1.0f;
+    private float timeBetweenPunches = 0.5f;
 
     private PlayerValuesScript playState;
 
