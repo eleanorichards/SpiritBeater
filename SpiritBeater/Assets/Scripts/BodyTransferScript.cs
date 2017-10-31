@@ -18,6 +18,7 @@ public class BodyTransferScript : MonoBehaviour {
     public float recallTimer;
     public float possessedGhostHealth;
     public Vector2 possessedGhostPosition;
+    private Dollah dollah;
     GameObject newPlayer;
     GameObject newGhost;
 
@@ -28,7 +29,7 @@ public class BodyTransferScript : MonoBehaviour {
     void Start () {
 
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-
+        dollah = GetComponent<Dollah>();
        // player = this.gameObject;
         recallTimer = 180.0f;
 
@@ -95,6 +96,7 @@ public class BodyTransferScript : MonoBehaviour {
             else
             {
                 Recall(newPlayer);
+                dollah.ResetCombo();
             }
         }
 
