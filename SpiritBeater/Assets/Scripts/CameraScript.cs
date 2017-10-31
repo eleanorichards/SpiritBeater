@@ -45,7 +45,7 @@ public class CameraScript : MonoBehaviour
         if (GetComponent<Camera>().orthographicSize > zoomMaxLimit || GetComponent<Camera>().orthographicSize > zoomMinLimit)
         {
             float scroll = Input.GetAxis("Mouse ScrollWheel");
-            GetComponent<Camera>().orthographicSize += scroll * scrollSpeed * 100f * Time.deltaTime;
+            GetComponent<Camera>().orthographicSize += scroll * scrollSpeed * 100f * -1 *  Time.deltaTime;
             if(GetComponent<Camera>().orthographicSize <= zoomMaxLimit)
             {
                 GetComponent<Camera>().orthographicSize = 20.1f;
