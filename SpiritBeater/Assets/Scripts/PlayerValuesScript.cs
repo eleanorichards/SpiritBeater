@@ -9,8 +9,15 @@ public class PlayerValuesScript : MonoBehaviour {
     public float money = 0;
     
 
+    public enum PlayerState
+    {
+        Idle,
+        Attacking
+    }
+
+    public PlayerState playerState;
 	void Start () {
-		
+        playerState = PlayerState.Idle;
 	}
 	
 	// Update is called once per frame
@@ -20,4 +27,12 @@ public class PlayerValuesScript : MonoBehaviour {
 
        
 	}
+    public void isAttacking()
+    {
+        playerState = PlayerState.Attacking;
+    }
+    public void notAttacking()
+    {
+        playerState = PlayerState.Idle;
+    }
 }

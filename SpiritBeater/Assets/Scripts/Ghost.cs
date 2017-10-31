@@ -17,6 +17,10 @@ public class Ghost : MonoBehaviour
     private GameObject FOV = null;
     private bool possessed = false;
     private NavMeshAgent2D nav;
+
+    private Vector3 huntedPos;
+
+    private GameObject[] spirList;
     private Rigidbody2D rig;
     int maxTime;
     int minTime;
@@ -42,6 +46,7 @@ public class Ghost : MonoBehaviour
 
     void Start()
     {
+        spirList = GameObject.FindGameObjectsWithTag("Spirit");
         spiritState = SpiritState.Idle;
         FOV = GetComponentInChildren<SpiritView>().gameObject;
         nav = GetComponent<NavMeshAgent2D>();
@@ -102,7 +107,20 @@ public class Ghost : MonoBehaviour
                 nav.destination = idleDest;
                 break;
             case SpiritState.Attack:
-                nav.destination = player.transform.position;
+                foreach (GameObject obj in spirList)
+                {
+                    if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                    {
+                        huntedPos = player.transform.position;
+                    }
+                }
+                foreach (GameObject obj in spirList)
+                {
+                    if (obj.GetComponent<Ghost>().spiritState != Ghost.SpiritState.Suspicious)
+                    {
+                        nav.destination = huntedPos;
+                    }
+                }
                 break;
         }
 
