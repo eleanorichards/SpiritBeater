@@ -16,13 +16,16 @@ public class EnemiesInRange : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D col)
     {
-        triggerList.Add(col);
-        print(triggerList.Count);
-
+        if (col.gameObject.tag == "Spirit")
+        {
+            triggerList.Add(col);
+        }
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        triggerList.Remove(col);
-
+        if (col.gameObject.tag == "Spirit")
+        {
+            triggerList.Remove(col);
+        }
     }
 }

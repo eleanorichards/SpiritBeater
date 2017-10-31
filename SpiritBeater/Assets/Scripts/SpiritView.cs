@@ -38,6 +38,7 @@ public class SpiritView : MonoBehaviour
         //myself.layer = 10;
         foreach (Collider2D spirit in spiritsInRadius)
         {
+
             Transform target = spirit.transform;
             Vector3 ray_direction = (spirit.transform.position - transform.position);
             //find angle between my agent and the hit is it in my field of view
