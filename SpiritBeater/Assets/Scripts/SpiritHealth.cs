@@ -12,6 +12,7 @@ public class SpiritHealth : MonoBehaviour {
     private Dollah dollah;
 
     public ParticleSystem dollahParticles;
+    private AnimationManager emotions;
 
 
 	// Use this for initialization
@@ -27,6 +28,7 @@ public class SpiritHealth : MonoBehaviour {
 
         player = GameObject.FindGameObjectWithTag("MasterPlayer");
         dollah = player.GetComponent<Dollah>();
+        emotions = GetComponent<AnimationManager>();
 
 	}
 
@@ -66,6 +68,7 @@ public class SpiritHealth : MonoBehaviour {
 
             currentHealth -= 30.0f;
             dollah.IncreaseCombo();
+            emotions.SetEmotion(Emotions.SAD);
             if(currentHealth <= 0f)
             {
                 Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
