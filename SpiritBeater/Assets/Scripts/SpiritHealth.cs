@@ -15,7 +15,6 @@ public class SpiritHealth : MonoBehaviour {
 	void Start ()
 	{
 		currentHealth = maxHealth;
-
 		//debug, runs decrease health every second
 		//InvokeRepeating ("DecreaseHealth", 1f, 1f);
 

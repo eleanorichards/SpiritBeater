@@ -9,6 +9,7 @@ public class Punch : MonoBehaviour {
     private float time = 0.0f;
     private float timeBetweenPunches = 1.0f;
 
+    private SpiritHealth health;
     private GameObject enemy;
     // Use this for initialization
     void Start () {
