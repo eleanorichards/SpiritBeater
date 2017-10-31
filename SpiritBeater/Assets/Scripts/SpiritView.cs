@@ -49,10 +49,13 @@ public class SpiritView : MonoBehaviour
                 {
                     if (spirit.CompareTag("Player"))
                     {
-                        //if(spirit.GetComponent<>)
                         print("Player in view");
+                        //if(spirit.GetComponent<Attack_Script>().IsAttacking())
+                        //{                           
+                            //i'm not sure if states are actually working...
+                            //this.parent.GetComponent<Ghost>().spiritState = Ghost.SpiritState.Attack;
+                        //}
                         Debug.DrawLine(transform.position, target.transform.position, Color.green);
-                        parent.GetComponent<Ghost>().spiritState = Ghost.SpiritState.Attack;
 
                     }
                     else
@@ -64,7 +67,6 @@ public class SpiritView : MonoBehaviour
                     if (!spirits.Contains(target.gameObject) && target.gameObject != gameObject.transform.parent)
                     {
                         spirits.Add(target.gameObject);
-
                     }
                 }
 
