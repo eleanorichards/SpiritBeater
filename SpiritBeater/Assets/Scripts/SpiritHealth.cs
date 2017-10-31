@@ -9,6 +9,7 @@ public class SpiritHealth : MonoBehaviour {
 	public float currentHealth = 100f;
 	public GameObject healthBar;
 	public Dollah dollah;
+    public ParticleSystem dollahParticles;
 
 
 	// Use this for initialization
@@ -53,6 +54,7 @@ public class SpiritHealth : MonoBehaviour {
             //dollah.IncreaseCombo();
             if(currentHealth == 0f)
             {
+                Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
                 Debug.Log("Spirit Died");
                 Destroy(gameObject);
             }
