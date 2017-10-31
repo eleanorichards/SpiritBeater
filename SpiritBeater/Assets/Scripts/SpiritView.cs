@@ -13,6 +13,7 @@ public class SpiritView : MonoBehaviour
 
     public LayerMask ignoreMask; //Set to spirit and player
     public LayerMask acceptMask; //anything you want to return in the view radius
+    public LayerMask acceptMaskTwo;
     private LayerMask me = 10;
     private GameObject parent;
     //[HideInInspector]
@@ -34,6 +35,7 @@ public class SpiritView : MonoBehaviour
     {
         //any spiritsInRadius are in the circle
         spirits.Clear();
+        acceptMask += acceptMaskTwo;
         Collider2D[] spiritsInRadius = Physics2D.OverlapCircleAll(transform.position, view_radius, acceptMask);
         //myself.layer = 10;
         foreach (Collider2D spirit in spiritsInRadius)

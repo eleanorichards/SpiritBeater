@@ -20,6 +20,8 @@ public class Ghost : MonoBehaviour
 
     private Vector3 huntedPos;
 
+
+    private GameObject suspiciousSpirit;
     private GameObject[] spirList;
     private Rigidbody2D rig;
     int maxTime;
@@ -117,16 +119,13 @@ public class Ghost : MonoBehaviour
             case SpiritState.Attack:
                 foreach (GameObject obj in spirList)
                 {
-                    //if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
-                    //{
-                    //    huntedPos = obj
-                    //}
                     foreach (GameObject playObj in playList)
                     {
                         if (playObj != null)
                         {
                             huntedPos = playObj.transform.position;
                         }
+
                         else
                         {
                             spiritState = SpiritState.Idle;
