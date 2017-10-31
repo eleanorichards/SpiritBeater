@@ -18,6 +18,7 @@ public class Ghost : MonoBehaviour
     private bool possessed = false;
     private NavMeshAgent2D nav;
 
+    private Vector3 huntedPos;
 
     private GameObject[] spirList;
     private Rigidbody2D rig;
@@ -106,17 +107,21 @@ public class Ghost : MonoBehaviour
                 nav.destination = idleDest;
                 break;
             case SpiritState.Attack:
-                nav.destination = player.transform.position;
+                foreach (GameObject obj in spirList)
+                {
+                    if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                    {
+                        huntedPos = player.transform.position;
+                    }
+                }
+                foreach (GameObject obj in spirList)
+                {
+                    if (obj.GetComponent<Ghost>().spiritState != Ghost.SpiritState.Suspicious)
+                    {
+                        nav.destination = huntedPos;
+                    }
+                }
                 break;
-                //foreach (GameObject obj in spirList)
-                //{
-                //    if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
-                //    {
-                        
-                //    }
-                //}
-                //nav.destination = 
-                //break;
         }
 
         //if (idle == true)
