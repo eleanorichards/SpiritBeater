@@ -30,7 +30,7 @@ public class PlayerValuesScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if(money <= 100)
+        if(money >= 100)
         {
             SceneManager.LoadScene(3);
         }
