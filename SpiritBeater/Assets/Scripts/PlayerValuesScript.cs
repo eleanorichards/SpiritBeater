@@ -8,8 +8,9 @@ public class PlayerValuesScript : MonoBehaviour {
     // Use this for initialization
     public float playerHealth = -1;
     public float money = 0;
-    
-
+    private int SeenMeter = 0;
+    private float time = 0.0f;
+    private float timeToHide = 1.0f;
     public enum PlayerState
     {
         Idle,
@@ -23,6 +24,7 @@ public class PlayerValuesScript : MonoBehaviour {
     public PlayerState playerState;
     public PlayerbehavourState behaveState;
 	void Start () {
+        time = Time.time;
         playerState = PlayerState.Idle;
         behaveState = PlayerbehavourState.Hidden;
 	}
@@ -33,6 +35,14 @@ public class PlayerValuesScript : MonoBehaviour {
         if(money >= 100)
         {
             SceneManager.LoadScene(3);
+        }
+        if (behaveState == PlayerbehavourState.Suspicious)
+        {
+            time += Time.deltaTime;
+            if (time >= timeToHide)
+            {
+                behaveState = PlayerbehavourState.Hidden;
+            }
         }
 
        
@@ -49,5 +59,6 @@ public class PlayerValuesScript : MonoBehaviour {
     public void isSuspicious()
     {
         behaveState = PlayerbehavourState.Suspicious;
+        time = 0.0f;
     }
 }

@@ -24,12 +24,12 @@ public class Ghost : MonoBehaviour
 
     private GameObject suspiciousSpirit;
     private GameObject[] spirList;
+    private GameObject[] playList;
     private Rigidbody2D rig;
     int maxTime;
     int minTime;
     public float timer = 0.0f;
 
-    private GameObject[] playList;
     private bool Updatebool = true;
 
 
@@ -77,7 +77,7 @@ public class Ghost : MonoBehaviour
         }
         if (timerActive)
         {
-
+            spirList = GameObject.FindGameObjectsWithTag("Spirit");
             //if returning to home terminal (terminal[5]) then stay for longer
             if (idleDest == terminals[5].transform.position)
             {
@@ -142,6 +142,9 @@ public class Ghost : MonoBehaviour
                         nav.destination = huntedPos;
                     }
                 }
+                break;
+            case SpiritState.Suspicious:
+                nav.destination = transform.position;
                 break;
         }
 
@@ -215,5 +218,23 @@ public class Ghost : MonoBehaviour
     {
         spiritState = SpiritState.Attack;
         emotions.SetEmotion(Emotions.ANGRY);
+    }
+    public Vector3 hunterpos()
+    {
+        foreach(GameObject obj in spirList)
+        {
+            if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+            {
+                return obj.transform.position;
+            }
+        }
+        foreach(GameObject obj in playList)
+        {
+            if (obj.GetComponent<PlayerValuesScript>().behaveState == PlayerValuesScript.PlayerbehavourState.Suspicious)
+            {
+                return obj.transform.position;
+            }
+        }
+        return new Vector3();
     }
 }

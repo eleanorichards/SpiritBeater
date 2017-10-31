@@ -124,16 +124,17 @@ public class BodyTransferScript : MonoBehaviour {
         recallTimer = 60.0f;
         Destroy(objectToLeave.gameObject);
 
-        Ghost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
+        
         Ghost.transform.position = possessedGhostPosition;
         newGhost = Instantiate(Ghost) as GameObject;
-        
+        newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
+
         //Debug.Log("Transform chosen");
         //Ghost.GetComponent<NavMeshAgent2D>().enabled = true;
         //Ghost.transform.position = possessedGhostPosition;
-        
 
-        
+
+
         //newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
         //newGhost.transform.position = possessedGhostPosition;
         possessedObject = false;

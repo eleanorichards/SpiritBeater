@@ -9,7 +9,8 @@ public class SpiritHealth : MonoBehaviour {
 	public float currentHealth = 100f;
 	public GameObject healthBar;
     private GameObject player;
-	private Dollah dollah;
+    private Dollah dollah;
+
     public ParticleSystem dollahParticles;
     private AnimationManager emotions;
 
@@ -20,6 +21,9 @@ public class SpiritHealth : MonoBehaviour {
         //currentHealth = maxHealth;
         //debug, runs decrease health every second
         //InvokeRepeating ("DecreaseHealth", 1f, 1f);
+
+       
+      
 
 
         player = GameObject.FindGameObjectWithTag("MasterPlayer");
@@ -59,6 +63,9 @@ public class SpiritHealth : MonoBehaviour {
         }
         else
         {
+
+           
+
             currentHealth -= 30.0f;
             dollah.IncreaseCombo();
             emotions.SetEmotion(Emotions.SAD);

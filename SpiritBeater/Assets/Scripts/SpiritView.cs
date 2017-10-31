@@ -69,13 +69,20 @@ public class SpiritView : MonoBehaviour
                             Debug.DrawLine(transform.position, target.transform.position, Color.green);
 
                     }
-                    else if (spirit.CompareTag("Spirit"))
+                    if (spirit.CompareTag("Spirit"))
                     {
                         if (spirit.gameObject.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
                         {
-                            print("suspicious");
+                            gameObject.transform.parent.GetComponent<Ghost>().isAttacking();
                         }
                     }
+                    //else if (spirit.CompareTag("Spirit"))
+                    //{
+                    //    if (spirit.gameObject.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                    //    {
+                    //        print("suspicious");
+                    //    }
+                    //}
                     //else
                     //{
                     //    Debug.DrawLine(transform.position, target.transform.position, Color.red);
