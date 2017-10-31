@@ -8,16 +8,22 @@ public class SpiritHealth : MonoBehaviour {
 	public float maxHealth = 100f;
 	public float currentHealth = 100f;
 	public GameObject healthBar;
-	public Dollah dollah;
+    private GameObject player;
+	private Dollah dollah;
     public ParticleSystem dollahParticles;
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		//currentHealth = maxHealth;
-		//debug, runs decrease health every second
-		//InvokeRepeating ("DecreaseHealth", 1f, 1f);
+        //currentHealth = maxHealth;
+        //debug, runs decrease health every second
+        //InvokeRepeating ("DecreaseHealth", 1f, 1f);
+
+
+        player = GameObject.FindGameObjectWithTag("MasterPlayer");
+        dollah = player.GetComponent<Dollah>();
+
 
 	}
 
@@ -35,10 +41,11 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void DecreaseHealth()
 	{
-		currentHealth -= 20f;
+
         if(this.gameObject.tag == "Player")
         {
-            if(currentHealth == 0f)
+		currentHealth -= 10f;
+            if(currentHealth <= 0f)
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
@@ -51,10 +58,12 @@ public class SpiritHealth : MonoBehaviour {
         }
         else
         {
-            //dollah.IncreaseCombo();
-            if(currentHealth == 0f)
+            currentHealth -= 30.0f;
+            dollah.IncreaseCombo();
+            if(currentHealth <= 0f)
             {
-                //Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
+                Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
+                dollah.AddDollah(false);
                 Debug.Log("Spirit Died");
                 Destroy(gameObject);
             }
