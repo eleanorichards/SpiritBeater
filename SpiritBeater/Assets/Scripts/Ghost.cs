@@ -17,6 +17,7 @@ public class Ghost : MonoBehaviour
     private GameObject FOV = null;
     private bool possessed = false;
     private NavMeshAgent2D nav;
+    private AnimationManager emotions;
 
     private Vector3 huntedPos;
 
@@ -63,7 +64,7 @@ public class Ghost : MonoBehaviour
         int i = Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
-
+        emotions = GetComponent<AnimationManager>();
         OGtargetTime = terminalTime;
     }
 
@@ -115,6 +116,7 @@ public class Ghost : MonoBehaviour
         {
             case SpiritState.Idle:
                 nav.destination = idleDest;
+                emotions.SetEmotion(Emotions.NORMAL);
                 break;
             case SpiritState.Attack:
                 foreach (GameObject obj in spirList)
@@ -171,7 +173,10 @@ public class Ghost : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject == terminals[previousPosition])
+        {
             timerActive = true;
+            
+        }
     }
 
     public bool getIsHome()
@@ -204,9 +209,11 @@ public class Ghost : MonoBehaviour
     public void isSuspicious()
     {
         spiritState = SpiritState.Suspicious;
+        emotions.SetEmotion(Emotions.SCARED);
     }
     public void isAttacking()
     {
         spiritState = SpiritState.Attack;
+        emotions.SetEmotion(Emotions.ANGRY);
     }
 }
