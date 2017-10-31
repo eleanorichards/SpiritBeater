@@ -10,7 +10,6 @@ public class Dollah : MonoBehaviour {
 	private int increment = 50;
 	private int stealthIncrement = 100;
 
-
 	public void AddDollah(bool isStealth)
 	{
 		if (isStealth) {
@@ -24,7 +23,7 @@ public class Dollah : MonoBehaviour {
 	public void IncreaseCombo()
 	{
 		Combo++;
-		if (Combo < 10) {
+		if (Combo > 10) {
 			ComboMultiplier += (Combo / 10);
 		} else if (Combo >= 10) {
 			ComboMultiplier += (Combo / 100);
