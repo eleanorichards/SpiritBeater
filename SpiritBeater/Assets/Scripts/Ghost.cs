@@ -117,9 +117,21 @@ public class Ghost : MonoBehaviour
             case SpiritState.Attack:
                 foreach (GameObject obj in spirList)
                 {
+                    //if (obj.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
+                    //{
+                    //    huntedPos = obj
+                    //}
                     foreach (GameObject playObj in playList)
                     {
-                        huntedPos = playObj.transform.position;
+                        if (playObj != null)
+                        {
+                            huntedPos = playObj.transform.position;
+                        }
+                        else
+                        {
+                            spiritState = SpiritState.Idle;
+                            break;
+                        }
                     }
                 }
                 foreach (GameObject obj in spirList)
