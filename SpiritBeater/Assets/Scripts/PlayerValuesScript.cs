@@ -24,7 +24,6 @@ public class PlayerValuesScript : MonoBehaviour {
     public PlayerState playerState;
     public PlayerbehavourState behaveState;
 	void Start () {
-        time = Time.time;
         playerState = PlayerState.Idle;
         behaveState = PlayerbehavourState.Hidden;
 	}
@@ -41,6 +40,7 @@ public class PlayerValuesScript : MonoBehaviour {
             time += Time.deltaTime;
             if (time >= timeToHide)
             {
+                print("no longer suspicious af");
                 behaveState = PlayerbehavourState.Hidden;
             }
         }

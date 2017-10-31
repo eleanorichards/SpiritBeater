@@ -8,19 +8,20 @@ public class Spawnsuspicious : MonoBehaviour {
     private float timeToWait = 4.0f;
 	// Use this for initialization
 	void Start () {
-        time = Time.deltaTime;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (time >= timeToWait)
+        time += Time.deltaTime;
+        if (time <= timeToWait)
         {
             GetComponent<Ghost>().isSuspicious();
+            print("Still suspicious");
         }
-        if (time < timeToWait)
+        if (time > timeToWait)
         {
             GetComponent<Ghost>().isIdle();
-            Destroy(GetComponent<Spawnsuspicious>());
+            print("not suspicious");
         }
     }
 }
