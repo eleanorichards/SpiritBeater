@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerValuesScript : MonoBehaviour {
 
@@ -29,7 +30,10 @@ public class PlayerValuesScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        if(money <= 100)
+        {
+            SceneManager.LoadScene(3);
+        }
 
        
 	}
