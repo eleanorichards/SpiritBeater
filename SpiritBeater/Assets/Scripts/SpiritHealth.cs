@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SpiritHealth : MonoBehaviour {
 
 	public float maxHealth = 100f;
-	public float currentHealth;
+	public float currentHealth = 100f;
 	public GameObject healthBar;
 	public Dollah dollah;
 
@@ -14,11 +14,16 @@ public class SpiritHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		currentHealth = maxHealth;
+		//currentHealth = maxHealth;
 		//debug, runs decrease health every second
 		//InvokeRepeating ("DecreaseHealth", 1f, 1f);
 
 	}
+
+    void Awake()
+    {
+       // currentHealth = maxHealth;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,13 +34,15 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void DecreaseHealth()
 	{
-		currentHealth -= 2f;
-        if(this.gameObject.tag == "Player Spirit")
+		currentHealth -= 20f;
+        if(this.gameObject.tag == "Player")
         {
             if(currentHealth == 0f)
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
+                SceneManager.LoadScene(1);
+
                
             }
                 
@@ -43,7 +50,12 @@ public class SpiritHealth : MonoBehaviour {
         }
         else
         {
-            dollah.IncreaseCombo();
+            //dollah.IncreaseCombo();
+            if(currentHealth == 0f)
+            {
+                Debug.Log("Spirit Died");
+                Destroy(gameObject);
+            }
         }
 		
 		//scales numbers for healthbar
@@ -53,14 +65,9 @@ public class SpiritHealth : MonoBehaviour {
 
 	public void SetHealthBar(float health)
 	{
-        if(this.gameObject.tag == "Player")
-        {
-            healthBar.transform.localScale = new Vector3(health*5, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-        }
-        else
-        {
+        
             healthBar.transform.localScale = new Vector3(health, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-        }
+        
 		
 	}
 
