@@ -8,6 +8,9 @@ public class Punch : MonoBehaviour {
     private List<Collider2D> list;
     private float time = 0.0f;
     private float timeBetweenPunches = 0.5f;
+    //AUDIO
+    private AudioSource audio;
+    public AudioClip Player_attack;
 
     private PlayerValuesScript playState;
 
@@ -19,7 +22,8 @@ public class Punch : MonoBehaviour {
         list = range.triggerList;
         time = Time.time;
         playState = gameObject.transform.parent.GetComponent<PlayerValuesScript>();
-	}
+        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -27,6 +31,7 @@ public class Punch : MonoBehaviour {
         {
             if (playState.playerState != PlayerValuesScript.PlayerState.Attacking)
             {
+                audio.PlayOneShot(Player_attack);
                 playState.isAttacking();
             }
             time += Time.deltaTime;

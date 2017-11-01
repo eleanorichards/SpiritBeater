@@ -6,6 +6,9 @@ public class SpiritView : MonoBehaviour
 {
 
     Vector2 ray_direction = Vector2.zero;
+    //AUDIO
+    private AudioSource audio;
+    public AudioClip hmm;
 
     public float view_radius = 5.0f;
     [Range(0, 360)]
@@ -24,6 +27,7 @@ public class SpiritView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
         parent = transform.parent.gameObject;
     }
 
@@ -59,6 +63,7 @@ public class SpiritView : MonoBehaviour
                         }
                         if (spirit.gameObject.GetComponent<PlayerValuesScript>().behaveState == PlayerValuesScript.PlayerbehavourState.Suspicious)
                         {
+                            audio.PlayOneShot(hmm);
                             gameObject.transform.parent.GetComponent<Ghost>().isAttacking();
                         }
                             //if(spirit.GetComponent<Attack_Script>().IsAttacking())

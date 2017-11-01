@@ -5,7 +5,8 @@ using UnityEngine;
 public class BodyTransferScript : MonoBehaviour {
 
     // Use this for initialization
-
+    private AudioSource audio;
+    public AudioClip swoosh;
     //bool for if player is currently recalling
     public bool isRecalling = false;
     //gameobject for the player - will need access to variables e.g. possessedobject
@@ -32,11 +33,11 @@ public class BodyTransferScript : MonoBehaviour {
         dollah = GetComponent<Dollah>();
        // player = this.gameObject;
         recallTimer = 180.0f;
+        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
 
 
-        
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -60,6 +61,7 @@ public class BodyTransferScript : MonoBehaviour {
                     {
                         //Debug.Log("It's working!");
                         GameObject target = hit.collider.transform.gameObject;
+                        audio.PlayOneShot(swoosh);
                         Possess(target);
                     }
 
