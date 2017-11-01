@@ -77,7 +77,6 @@ public class Ghost : MonoBehaviour
         }
         if (timerActive)
         {
-            spirList = GameObject.FindGameObjectsWithTag("Spirit");
             //if returning to home terminal (terminal[5]) then stay for longer
             if (idleDest == terminals[5].transform.position)
             {
@@ -111,7 +110,7 @@ public class Ghost : MonoBehaviour
             FOVRotation();
             timer = 0;
         }
-
+        spirList = GameObject.FindGameObjectsWithTag("Spirit");
         switch (spiritState)
         {
             case SpiritState.Idle:
@@ -145,6 +144,7 @@ public class Ghost : MonoBehaviour
                 break;
             case SpiritState.Suspicious:
                 nav.destination = transform.position;
+                emotions.SetEmotion(Emotions.SAD);
                 break;
         }
 

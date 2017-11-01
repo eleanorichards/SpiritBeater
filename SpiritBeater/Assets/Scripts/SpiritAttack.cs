@@ -14,7 +14,7 @@ public class SpiritAttack : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        time = Time.deltaTime;
+        time = Time.time;
         spiritView = GetComponentInChildren<SpiritView>();
     }
 
