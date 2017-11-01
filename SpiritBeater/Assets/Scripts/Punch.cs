@@ -22,7 +22,7 @@ public class Punch : MonoBehaviour {
         list = range.triggerList;
         time = Time.time;
         playState = gameObject.transform.parent.GetComponent<PlayerValuesScript>();
-        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
+        audio = GameObject.Find("Music").GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame

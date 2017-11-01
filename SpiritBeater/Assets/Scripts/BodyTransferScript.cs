@@ -33,7 +33,7 @@ public class BodyTransferScript : MonoBehaviour {
         dollah = GetComponent<Dollah>();
        // player = this.gameObject;
         recallTimer = 180.0f;
-        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
+        audio = GameObject.Find("Music").GetComponent<AudioSource>();
 
 
 

@@ -25,9 +25,9 @@ public class SpiritHealth : MonoBehaviour {
         //debug, runs decrease health every second
         //InvokeRepeating ("DecreaseHealth", 1f, 1f);
 
-        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
-       
-      
+        audio = GameObject.Find("Music").GetComponent<AudioSource>();
+
+
 
 
         player = GameObject.FindGameObjectWithTag("MasterPlayer");

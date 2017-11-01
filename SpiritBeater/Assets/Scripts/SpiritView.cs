@@ -27,7 +27,7 @@ public class SpiritView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
+        audio = GameObject.Find("Music").GetComponent<AudioSource>();
         parent = transform.parent.gameObject;
     }
 
