@@ -17,8 +17,10 @@ public class SpiritAttack : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
         time = Time.deltaTime;
+
         spiritView = GetComponentInChildren<SpiritView>();
     }
 
