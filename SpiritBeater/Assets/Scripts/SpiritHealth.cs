@@ -13,6 +13,9 @@ public class SpiritHealth : MonoBehaviour {
 
     public ParticleSystem dollahParticles;
     private AnimationManager emotions;
+    //AUDIO
+    private AudioSource audio;
+    public AudioClip money;
 
 
 	// Use this for initialization
@@ -22,6 +25,7 @@ public class SpiritHealth : MonoBehaviour {
         //debug, runs decrease health every second
         //InvokeRepeating ("DecreaseHealth", 1f, 1f);
 
+        audio = GameObject.Find("AudioManager").GetComponentInChildren<AudioSource>();
        
       
 
@@ -71,6 +75,7 @@ public class SpiritHealth : MonoBehaviour {
             emotions.SetEmotion(Emotions.SAD);
             if(currentHealth <= 0f)
             {
+                audio.PlayOneShot(money);
                 Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
                 dollah.AddDollah(false);
                 Debug.Log("Spirit Died");
