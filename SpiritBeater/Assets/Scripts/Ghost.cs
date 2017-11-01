@@ -18,6 +18,9 @@ public class Ghost : MonoBehaviour
     private bool possessed = false;
     private NavMeshAgent2D nav;
     private AnimationManager emotions;
+    private AudioSource speaker;
+    public AudioClip scream_sfx;
+    private bool screamed = false;
 
     private Vector3 huntedPos;
 
@@ -53,6 +56,7 @@ public class Ghost : MonoBehaviour
 
     void Start()
     {
+        speaker = GetComponent<AudioSource>();
         spirList = GameObject.FindGameObjectsWithTag("Spirit");
         spiritState = SpiritState.Idle;
         FOV = GetComponentInChildren<SpiritView>().gameObject;
@@ -218,10 +222,29 @@ public class Ghost : MonoBehaviour
     {
         spiritState = SpiritState.Attack;
         emotions.SetEmotion(Emotions.ANGRY);
+        if (!screamed)
+        {
+            MusicMode musicSetting = (MusicMode)PlayerPrefs.GetInt("Music", 0);
+            switch (musicSetting)
+            {
+                case MusicMode.FULL:
+                    speaker.volume = 1.0f;
+                    break;
+                case MusicMode.MUTE:
+                    speaker.volume = 0f;
+                    break;
+                case MusicMode.HALF:
+                    speaker.volume = 0.5f;
+                    break;
+            }
+            speaker.PlayOneShot(scream_sfx);
+            screamed = true;
+        }
     }
     public void isIdle()
     {
         spiritState = SpiritState.Idle;
+        screamed = false;
     }
     public Vector3 hunterpos()
     {
