@@ -29,7 +29,7 @@ public class DollahTextScript : MonoBehaviour {
 
 
 
-        if (player.GetComponent<Dollah>().DollahScore < 0f)
+        if (player.GetComponent<Dollah>().DollahScore < -100f)
         {
             if (showMessage == true)
             {            

@@ -32,6 +32,7 @@ public class Ghost : MonoBehaviour
 
     private Vector3 huntedPos;
 
+    public float goldInventory;
     
     int maxTime;
     int minTime;
@@ -76,6 +77,7 @@ public class Ghost : MonoBehaviour
         spiritState = SpiritState.Idle;
 
         ogTerminalWaitTime = terminalWaitTime;
+        goldInventory = Random.Range(10,50);
     }
 
     void Update()
@@ -83,6 +85,20 @@ public class Ghost : MonoBehaviour
         FindPlayer();
         SetTerminalStayLength();
         SetSpiritEmotion();
+        if(TargetReached(terminals[previousPosition].transform.position, 5f))
+        {
+            timerActive = true;
+
+            int x = Random.Range(0, 1);
+            if(x == 0)
+            {
+                goldInventory += Random.Range(10, 20);
+            }
+            else if(goldInventory > 20)
+            {
+                goldInventory -= Random.Range(10, 20);
+            }
+        }
 
         // set to true once spirit has stayed at the terminal for a set time length, 
         // determined by SetTerminalStayLength()...
@@ -156,8 +172,8 @@ public class Ghost : MonoBehaviour
     {
         if (timerActive)
         {
-            // if returning to home terminal (terminal[5]) then stay there for longer, seems to always be grave 2
-            if (idleDest == terminals[5].transform.position)
+            // if returning to home terminal (terminal[0]) then stay there for longer, seems to always be grave 2
+            if (idleDest == terminals[0].transform.position)
             {
                 terminalWaitTime = homeTime;
             }
@@ -195,13 +211,13 @@ public class Ghost : MonoBehaviour
     }
 
     //if ghost collides with terminal, enter
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject == terminals[previousPosition])
-        {
-            timerActive = true;            
-        }
-    }
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.gameObject == terminals[previousPosition])
+    //    {
+    //        timerActive = true;            
+    //    }
+    //}
 
     public bool GetIsHome()
     {
@@ -216,13 +232,24 @@ public class Ghost : MonoBehaviour
     //set new target and sets previous position to the new target
     void SetTarget()
     {
+
         int i = Random.Range(0, terminals.Count);
         if (previousPosition == i)
         {
             i = Random.Range(0, terminals.Count);
         }
+      
         idleDest = terminals[i].transform.position;
         previousPosition = i;
+    }
+
+    protected bool TargetReached(Vector3 targetPos, float distanceRad)
+    {
+        return
+            transform.position.y < targetPos.y + distanceRad &&
+            transform.position.y > targetPos.y - distanceRad &&
+            transform.position.x < targetPos.x + distanceRad &&
+            transform.position.x > targetPos.x - distanceRad;
     }
 
     public void IsPossessed(bool _possessed)

@@ -11,17 +11,19 @@ public class Dollah : MonoBehaviour {
 	private int increment = 50;
 	private int stealthIncrement = 100;
 
-	public void AddDollah(bool isStealth)
+	public void AddDollah(bool isStealth, float amount)
 	{
 		if (isStealth)
         {
-			DollahScore += (ComboMultiplier * stealthIncrement);
+            //DollahScore += (ComboMultiplier * stealthIncrement);
+            DollahScore += amount;
 		}
         else
         {
-			DollahScore += (ComboMultiplier * increment);
-		}
-	}
+            //DollahScore += (ComboMultiplier * increment);
+            DollahScore += amount;
+        }
+    }
 
     public void SubtractDollah(float amountLost)
     {

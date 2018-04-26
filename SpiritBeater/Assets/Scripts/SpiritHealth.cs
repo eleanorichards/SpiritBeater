@@ -53,6 +53,7 @@ public class SpiritHealth : MonoBehaviour {
 
         if(this.gameObject.tag == "Player")
         {
+            dollah.SubtractDollah(10f);
 		currentHealth -= 10f;
             if(currentHealth <= 0f)
             {
@@ -75,7 +76,7 @@ public class SpiritHealth : MonoBehaviour {
             {
                 audio.PlayOneShot(money);
                 Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
-                dollah.AddDollah(false);
+                dollah.AddDollah(false, this.GetComponent<Ghost>().goldInventory);
                 Debug.Log("Spirit Died");
                 Destroy(gameObject);
             }
