@@ -13,12 +13,20 @@ public class Dollah : MonoBehaviour {
 
 	public void AddDollah(bool isStealth)
 	{
-		if (isStealth) {
+		if (isStealth)
+        {
 			DollahScore += (ComboMultiplier * stealthIncrement);
-		} else {
+		}
+        else
+        {
 			DollahScore += (ComboMultiplier * increment);
 		}
 	}
+
+    public void SubtractDollah(float amountLost)
+    {
+        DollahScore -= amountLost;
+    }
 
 
 	public void IncreaseCombo()
@@ -45,7 +53,8 @@ public class Dollah : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if(DollahScore >= 3500)
         {
             SceneManager.LoadScene(3);

@@ -27,35 +27,28 @@ public class BodyTransferScript : MonoBehaviour {
 
 
 
-    void Start () {
-
+    void Start ()
+    {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         dollah = GetComponent<Dollah>();
        // player = this.gameObject;
         recallTimer = 180.0f;
         audio = GameObject.Find("Music").GetComponent<AudioSource>();
-
-
-
     }
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
         //if the player has not possessed an object
         if(!possessedObject)
         {
-
             if(Input.GetMouseButton(0))
             {
-                //Debug.Log("CLick");
-                //RaycastHit2D hitInfo = new RaycastHit2D();
                 Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, acceptMask);
+
                 if (hit.collider != null)
-                {
-                    
+                {                    
                     //Debug.Log("Hit " + hit.collider.transform.gameObject.name);
                     if (hit.collider.transform.gameObject.tag == "Spirit")
                     {
@@ -99,6 +92,8 @@ public class BodyTransferScript : MonoBehaviour {
             {
                 Recall(newPlayer);
                 dollah.ResetCombo();
+                dollah.SubtractDollah(200f);
+
             }
         }
 
@@ -131,19 +126,8 @@ public class BodyTransferScript : MonoBehaviour {
         newGhost = Instantiate(Ghost) as GameObject;
         newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
 
-        //Debug.Log("Transform chosen");
-        //Ghost.GetComponent<NavMeshAgent2D>().enabled = true;
-        //Ghost.transform.position = possessedGhostPosition;
-
-
-
-        //newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
-        //newGhost.transform.position = possessedGhostPosition;
+       
         possessedObject = false;
-
-
-
-
     }
     //This function will trigger when the player clicks on an object
     void Possess(GameObject clickedObject)

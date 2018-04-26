@@ -58,9 +58,7 @@ public class SpiritHealth : MonoBehaviour {
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
-                SceneManager.LoadScene(1);
-
-               
+                SceneManager.LoadScene(1);               
             }
                 
             

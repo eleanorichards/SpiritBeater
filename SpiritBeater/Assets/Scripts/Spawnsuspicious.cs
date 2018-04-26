@@ -15,13 +15,13 @@ public class Spawnsuspicious : MonoBehaviour {
         time += Time.deltaTime;
         if (time <= timeToWait)
         {
-            GetComponent<Ghost>().isSuspicious();
-            print("Still suspicious");
+            GetComponent<Ghost>().IsSuspicious();
+            //print("Still suspicious");
         }
         if (time > timeToWait)
         {
-            GetComponent<Ghost>().isIdle();
-            print("not suspicious");
+            GetComponent<Ghost>().IsIdle();
+            //print("not suspicious");
         }
     }
 }

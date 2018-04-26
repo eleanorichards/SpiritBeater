@@ -64,7 +64,7 @@ public class SpiritView : MonoBehaviour
                         if (spirit.gameObject.GetComponent<PlayerValuesScript>().behaveState == PlayerValuesScript.PlayerbehavourState.Suspicious)
                         {
                             audio.PlayOneShot(hmm);
-                            gameObject.transform.parent.GetComponent<Ghost>().isAttacking();
+                            gameObject.transform.parent.GetComponent<Ghost>().IsAttacking();
                         }
                             //if(spirit.GetComponent<Attack_Script>().IsAttacking())
                             //{                           
@@ -78,7 +78,7 @@ public class SpiritView : MonoBehaviour
                     {
                         if (spirit.gameObject.GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious)
                         {
-                            gameObject.transform.parent.GetComponent<Ghost>().isAttacking();
+                            gameObject.transform.parent.GetComponent<Ghost>().IsAttacking();
                         }
                     }
                     //else if (spirit.CompareTag("Spirit"))
