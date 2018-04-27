@@ -10,6 +10,7 @@ public class Dollah : MonoBehaviour {
 	public float ComboMultiplier = 1.0f;
 	private int increment = 50;
 	private int stealthIncrement = 100;
+    public int goldDebtDue = 350;
 
 	public void AddDollah(bool isStealth, float amount)
 	{
@@ -57,7 +58,7 @@ public class Dollah : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if(DollahScore >= 3500)
+		if(DollahScore >= goldDebtDue)
         {
             SceneManager.LoadScene(3);
         }

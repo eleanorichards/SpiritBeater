@@ -92,7 +92,7 @@ public class BodyTransferScript : MonoBehaviour {
             {
                 Recall(newPlayer);
                 dollah.ResetCombo();
-                dollah.SubtractDollah(200f);
+                dollah.SubtractDollah(100f);
 
             }
         }

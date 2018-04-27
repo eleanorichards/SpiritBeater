@@ -53,7 +53,7 @@ public class SpiritHealth : MonoBehaviour {
 
         if(this.gameObject.tag == "Player")
         {
-            dollah.SubtractDollah(10f);
+            dollah.SubtractDollah(1f);
 		currentHealth -= 10f;
             if(currentHealth <= 0f)
             {

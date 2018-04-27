@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Ghost : MonoBehaviour
 {
     private NavMeshAgent2D nav;
     private AnimationManager emotions;
     private AudioSource speaker;
-    public AudioClip scream_sfx; // <---------- dont have a sound effect?
+    public AudioClip scream_sfx; // <---------- don't have a sound effect?
     private Rigidbody2D rig;
 
     //GameObjects required by ghosts
@@ -15,6 +18,7 @@ public class Ghost : MonoBehaviour
     private GameObject[] terminalList;
     private GameObject suspiciousSpirit;
     public GameObject playerSpirit;
+    private Text displayInventory;
 
     // wait times at terminals variables
     float ogTerminalWaitTime;
@@ -55,7 +59,7 @@ public class Ghost : MonoBehaviour
     public SpiritState spiritState;
 
     public List<GameObject> terminals = new List<GameObject>();
-
+    private bool collectGold;
 
     void Start()
     {
@@ -64,20 +68,21 @@ public class Ghost : MonoBehaviour
         nav = GetComponent<NavMeshAgent2D>();
         rig = GetComponent<Rigidbody2D>();
         emotions = GetComponent<AnimationManager>();
-
+        displayInventory = GetComponentInChildren<Text>();
+        //inventory.text = "hi";
         // fill with terminals, for navigation between them
         terminalList = GameObject.FindGameObjectsWithTag("terminal");
         terminals.AddRange(terminalList);
 
         //sets initial random target terminal for spirits
-        int i = Random.Range(0, terminals.Count);
+        int i = UnityEngine.Random.Range(0, terminals.Count);
         previousPosition = i;
         idleDest = terminals[i].transform.position;
 
         spiritState = SpiritState.Idle;
 
         ogTerminalWaitTime = terminalWaitTime;
-        goldInventory = Random.Range(10,50);
+        goldInventory = UnityEngine.Random.Range(4, 7);
     }
 
     void Update()
@@ -85,20 +90,9 @@ public class Ghost : MonoBehaviour
         FindPlayer();
         SetTerminalStayLength();
         SetSpiritEmotion();
-        if(TargetReached(terminals[previousPosition].transform.position, 5f))
-        {
-            timerActive = true;
+        DisplayGoldValue();
 
-            int x = Random.Range(0, 1);
-            if(x == 0)
-            {
-                goldInventory += Random.Range(10, 20);
-            }
-            else if(goldInventory > 20)
-            {
-                goldInventory -= Random.Range(10, 20);
-            }
-        }
+        CollectGold();
 
         // set to true once spirit has stayed at the terminal for a set time length, 
         // determined by SetTerminalStayLength()...
@@ -106,11 +100,43 @@ public class Ghost : MonoBehaviour
         {
             SetTarget();
             moveTarget = false;
+            collectGold = true;
         }
         Move();        
     }
 
-    void Move()
+    private void CollectGold()
+    {
+        if (collectGold == true)
+        {
+            if (TargetReached(terminals[previousPosition].transform.position, 5f))
+            {
+                timerActive = true;
+
+                int x = UnityEngine.Random.Range(0, 1);
+                if (x == 0)
+                {
+                    if (goldInventory < 30)
+                    {
+                        goldInventory += UnityEngine.Random.Range(1, 2);
+                    }
+                }
+                else if (goldInventory > 2)
+                {
+                    goldInventory -= UnityEngine.Random.Range(1, 2);
+
+                }
+                collectGold = false;
+            }
+        }
+    }
+
+    private void DisplayGoldValue()
+    {
+        displayInventory.text = goldInventory.ToString();
+    }
+
+    private void Move()
     {
         timer += Time.deltaTime;
 
@@ -233,10 +259,10 @@ public class Ghost : MonoBehaviour
     void SetTarget()
     {
 
-        int i = Random.Range(0, terminals.Count);
+        int i = UnityEngine.Random.Range(0, terminals.Count);
         if (previousPosition == i)
         {
-            i = Random.Range(0, terminals.Count);
+            i = UnityEngine.Random.Range(0, terminals.Count);
         }
       
         idleDest = terminals[i].transform.position;
