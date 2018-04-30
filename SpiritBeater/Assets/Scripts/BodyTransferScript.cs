@@ -22,10 +22,10 @@ public class BodyTransferScript : MonoBehaviour {
     private Dollah dollah;
     GameObject newPlayer;
     GameObject newGhost;
+    Camera cam;
+
 
     public LayerMask acceptMask;
-
-
 
     void Start ()
     {
@@ -34,6 +34,7 @@ public class BodyTransferScript : MonoBehaviour {
        // player = this.gameObject;
         recallTimer = 180.0f;
         audio = GameObject.Find("Music").GetComponent<AudioSource>();
+        cam = mainCamera;
     }
 	
 	// Update is called once per frame
@@ -56,9 +57,7 @@ public class BodyTransferScript : MonoBehaviour {
                         GameObject target = hit.collider.transform.gameObject;
                         audio.PlayOneShot(swoosh);
                         Possess(target);
-                    }
-
-                   
+                    }                   
                 }
                 else
                 {
@@ -92,7 +91,7 @@ public class BodyTransferScript : MonoBehaviour {
             {
                 Recall(newPlayer);
                 dollah.ResetCombo();
-                dollah.SubtractDollah(100f);
+                dollah.SubtractDollah(10f);
 
             }
         }
@@ -125,9 +124,14 @@ public class BodyTransferScript : MonoBehaviour {
         Ghost.transform.position = possessedGhostPosition;
         newGhost = Instantiate(Ghost) as GameObject;
         newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
-
-       
+        //newGhost.GetComponent<Ghost>().IsSuspicious();
         possessedObject = false;
+
+        cam.transform.position = new Vector3(newGhost.transform.position.x, newGhost.transform.position.y, cam.transform.position.z) ;
+
+
+
+
     }
     //This function will trigger when the player clicks on an object
     void Possess(GameObject clickedObject)

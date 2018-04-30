@@ -43,20 +43,7 @@ public class PlayerMoverment : MonoBehaviour
             Mathf.Clamp(rig.velocity.x, -speed, speed),
             Mathf.Clamp(rig.velocity.y, -speed, speed));
         mainCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -10);
-        //set direction
-        //	if (GetComponent<Rigidbody2D> ().velocity.x < 0) {
-        //		directionIsLeft = true;
-        //		transform.localScale = new Vector3(-1,1,1);
-        //	}
-        //	if (GetComponent<Rigidbody2D> ().velocity.x > 0) {
-        //		directionIsLeft = false;
-        //		transform.localScale = new Vector3(1,1,1);
-        //	}
-        //}
-
-        //public bool GetDirection(){
-        //	return directionIsLeft;
-        //}
+        
     }
 
 
@@ -64,4 +51,5 @@ public class PlayerMoverment : MonoBehaviour
     {
         possessed = _possessed;
     }
+
 }

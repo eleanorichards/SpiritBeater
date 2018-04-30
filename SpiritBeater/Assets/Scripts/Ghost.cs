@@ -236,14 +236,7 @@ public class Ghost : MonoBehaviour
         FOV.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
     }
 
-    //if ghost collides with terminal, enter
-    //void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (other.gameObject == terminals[previousPosition])
-    //    {
-    //        timerActive = true;            
-    //    }
-    //}
+
 
     public bool GetIsHome()
     {
@@ -286,7 +279,7 @@ public class Ghost : MonoBehaviour
     public void IsSuspicious()
     {
         spiritState = SpiritState.Suspicious;
-        emotions.SetEmotion(Emotions.SCARED);
+        //emotions.SetEmotion(Emotions.SCARED);
     }
     public void IsAttacking()
     {

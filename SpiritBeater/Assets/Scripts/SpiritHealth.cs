@@ -42,40 +42,37 @@ public class SpiritHealth : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         float calculateHealth = currentHealth / maxHealth;
         SetHealthBar(calculateHealth);
-
     }
 
 	public void DecreaseHealth()
 	{
-
+        //if ghost is a player
         if(this.gameObject.tag == "Player")
         {
             dollah.SubtractDollah(1f);
-		currentHealth -= 10f;
+		    currentHealth -= 7f;
             if(currentHealth <= 0f)
             {
                 //End Game Procedures
                 Debug.Log("Player Died");
                 SceneManager.LoadScene(1);               
             }
-                
-            
         }
+        //if ghost is a scrub
         else
-        {
-
-           
-
+        {     
             currentHealth -= 30.0f;
             dollah.IncreaseCombo();
             emotions.SetEmotion(Emotions.SAD);
-            if(currentHealth <= 0f)
+            Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
+
+            if (currentHealth <= 0f)
             {
                 audio.PlayOneShot(money);
-                Instantiate(dollahParticles, gameObject.transform.position, Quaternion.identity);
                 dollah.AddDollah(false, this.GetComponent<Ghost>().goldInventory);
                 Debug.Log("Spirit Died");
                 Destroy(gameObject);
