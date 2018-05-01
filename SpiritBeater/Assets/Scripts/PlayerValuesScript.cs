@@ -11,6 +11,8 @@ public class PlayerValuesScript : MonoBehaviour {
     private int SeenMeter = 0;
     private float time = 0.0f;
     private float timeToHide = 1.0f;
+    public int numofAngryGhosts = 0;
+    private List<Collider2D> listholder;
     public enum PlayerState
     {
         Idle,
@@ -23,25 +25,40 @@ public class PlayerValuesScript : MonoBehaviour {
     }
     public PlayerState playerState;
     public PlayerbehavourState behaveState;
+    public GameObject list;
 	void Start () {
         playerState = PlayerState.Idle;
         behaveState = PlayerbehavourState.Hidden;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(money >= 100)
+        if (listholder != null)
+        listholder = list.GetComponent<EnemiesInRange>().triggerList;
+        if (money >= 100)
         {
             SceneManager.LoadScene(3);
         }
         if (behaveState == PlayerbehavourState.Suspicious)
         {
-            time += Time.deltaTime;
-            if (time >= timeToHide)
+            if (listholder != null)
             {
-                print("no longer suspicious af");
-                behaveState = PlayerbehavourState.Hidden;
+                for (int i = 0; i != listholder.Count; i++)
+                {
+                    if (listholder[i].GetComponent<Ghost>().spiritState == Ghost.SpiritState.Suspicious || listholder[i].GetComponent<Ghost>().spiritState == Ghost.SpiritState.Attack)
+                    {
+                        numofAngryGhosts++;
+                    }
+                }
+                if (numofAngryGhosts == 0)
+                {
+                    time += Time.deltaTime;
+                    if (time >= timeToHide)
+                    {
+                        behaveState = PlayerbehavourState.Hidden;
+                        time = 0;
+                    }
+                }
             }
         }
 
