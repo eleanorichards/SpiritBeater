@@ -7,20 +7,57 @@ public class DollahTextScript : MonoBehaviour {
 
     public float score;
     public GameObject player;
-    public GameObject txt;
-    
-	// Use this for initialization
-	void Start () {
+    public GameObject scoreText;
+    public GameObject devilText;
+    private GameObject canvas;
+    private bool showMessage = true;
+    private float timer = 0;
+    private Dollah dollah;
 
+    // Use this for initialization
+    void Start ()
+    {
+        scoreText = GameObject.FindWithTag("Score");
+        devilText = GameObject.FindWithTag("DevilMessage");
+        devilText.GetComponent<Text>().transform.position = new Vector2(0, 1000);
+        canvas = GameObject.FindWithTag("Canvas");
+        dollah = player.GetComponent<Dollah>();
 
-        txt = this.gameObject; 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
+    // Update is called once per frame
+    void Update ()
+    {        
         score = player.GetComponent<Dollah>().DollahScore;
-        GetComponent<UnityEngine.UI.Text>().text = score.ToString() + "/3500";
-		
+        scoreText.GetComponent<UnityEngine.UI.Text>().text = score.ToString() + " / " + dollah.goldDebtDue.ToString();
+
+        DevilMessage();
+       
 	}
+
+    private void DevilMessage()
+    {
+        if (player.GetComponent<Dollah>().DollahScore < -100f)
+        {
+            if (showMessage == true)
+            {
+                timer += Time.deltaTime;
+                if (timer < 5f)
+                {
+                    devilText.transform.position = canvas.transform.position;
+                }
+                else
+                {
+                    devilText.transform.position = new Vector2(0, 1000);
+                    showMessage = false;
+
+                }
+            }
+        }
+        else if (player.GetComponent<Dollah>().DollahScore > 0f)
+        {
+            showMessage = true;
+            timer = 0f;
+        }
+    }
 }

@@ -22,40 +22,34 @@ public class BodyTransferScript : MonoBehaviour {
     private Dollah dollah;
     GameObject newPlayer;
     GameObject newGhost;
+    Camera cam;
+
 
     public LayerMask acceptMask;
 
-
-
-    void Start () {
-
+    void Start ()
+    {
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         dollah = GetComponent<Dollah>();
        // player = this.gameObject;
         recallTimer = 180.0f;
         audio = GameObject.Find("Music").GetComponent<AudioSource>();
-
-
-
+        cam = mainCamera;
     }
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
         //if the player has not possessed an object
         if(!possessedObject)
         {
-
             if(Input.GetMouseButton(0))
             {
-                //Debug.Log("CLick");
-                //RaycastHit2D hitInfo = new RaycastHit2D();
                 Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, acceptMask);
+
                 if (hit.collider != null)
-                {
-                    
+                {                    
                     //Debug.Log("Hit " + hit.collider.transform.gameObject.name);
                     if (hit.collider.transform.gameObject.tag == "Spirit")
                     {
@@ -63,9 +57,7 @@ public class BodyTransferScript : MonoBehaviour {
                         GameObject target = hit.collider.transform.gameObject;
                         audio.PlayOneShot(swoosh);
                         Possess(target);
-                    }
-
-                   
+                    }                   
                 }
                 else
                 {
@@ -99,6 +91,8 @@ public class BodyTransferScript : MonoBehaviour {
             {
                 Recall(newPlayer);
                 dollah.ResetCombo();
+                dollah.SubtractDollah(10f);
+
             }
         }
 
@@ -130,16 +124,10 @@ public class BodyTransferScript : MonoBehaviour {
         Ghost.transform.position = possessedGhostPosition;
         newGhost = Instantiate(Ghost) as GameObject;
         newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
-
-        //Debug.Log("Transform chosen");
-        //Ghost.GetComponent<NavMeshAgent2D>().enabled = true;
-        //Ghost.transform.position = possessedGhostPosition;
-
-
-
-        //newGhost.GetComponent<SpiritHealth>().currentHealth = possessedGhostHealth;
-        //newGhost.transform.position = possessedGhostPosition;
+        //newGhost.GetComponent<Ghost>().IsSuspicious();
         possessedObject = false;
+
+        cam.transform.position = new Vector3(newGhost.transform.position.x, newGhost.transform.position.y, cam.transform.position.z) ;
 
 
 
