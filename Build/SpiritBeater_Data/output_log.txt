@@ -1,0 +1,77 @@
+Initialize engine version: 5.6.3f1 (d3101c3b8468)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1c03)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+    Driver:   21.21.13.7653
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\SpiritBeater\Build\SpiritBeater_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\Assembly-Boo-firstpass.dll (this message is harmless)
+Loading D:\SpiritBeater\Build\SpiritBeater_Data\Managed\Assembly-Boo-firstpass.dll into Unity Child Domain
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\SpiritBeater\Build\SpiritBeater_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.035 seconds
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\SpiritBeater\Build\SpiritBeater_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.071774 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.670309 ms
+
+Unloading 27 unused Assets to reduce memory usage. Loaded Objects now: 6600.
+Total: 1.823248 ms (FindLiveObjects: 0.287849 ms CreateObjectMapping: 0.058591 ms MarkObjects: 1.411906 ms  DeleteObjects: 0.063399 ms)
+
+Spirit Died
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+InvalidOperationException: Collection was modified; enumeration operation may not execute.
+  at System.Collections.Generic.List`1+Enumerator[UnityEngine.Collider2D].VerifyState () [0x00000] in <filename unknown>:0 
+  at System.Collections.Generic.List`1+Enumerator[UnityEngine.Collider2D].MoveNext () [0x00000] in <filename unknown>:0 
+  at Punch.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Component:CompareTag (string)
+  at SpiritAttack.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Component:CompareTag (string)
+  at SpiritAttack.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+Player Died
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 8.043867 ms
+
+Unloading 182 unused Assets to reduce memory usage. Loaded Objects now: 299.
+Total: 1.916394 ms (FindLiveObjects: 0.027042 ms CreateObjectMapping: 0.013521 ms MarkObjects: 0.142723 ms  DeleteObjects: 1.731305 ms)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.333521 ms
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 330.
+Total: 1.632450 ms (FindLiveObjects: 0.031849 ms CreateObjectMapping: 0.025239 ms MarkObjects: 0.206422 ms  DeleteObjects: 1.367436 ms)
+
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 37d8 -> priority: 1 
+  Thread -> id: 21f0 -> priority: 1 
+  Thread -> id: 2394 -> priority: 1 
+  Thread -> id: 338 -> priority: 1 
